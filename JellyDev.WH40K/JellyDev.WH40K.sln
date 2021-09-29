@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JellyDev.WH40K.Domain", "JellyDev.WH40K.Domain\JellyDev.WH40K.Domain.csproj", "{9A8A79DE-4D41-4345-A3C2-EA154AA6A5B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A8A79DE-4D41-4345-A3C2-EA154AA6A5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8A79DE-4D41-4345-A3C2-EA154AA6A5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8A79DE-4D41-4345-A3C2-EA154AA6A5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8A79DE-4D41-4345-A3C2-EA154AA6A5B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B846B6C-4539-4244-85C1-BE5BA30874C7}
+	EndGlobalSection
+EndGlobal
