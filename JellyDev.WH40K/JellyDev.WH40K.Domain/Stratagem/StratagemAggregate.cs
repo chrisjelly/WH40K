@@ -7,12 +7,12 @@ namespace JellyDev.WH40K.Domain.Stratagem
     /// <summary>
     /// Stratagem aggregate root
     /// </summary>
-    public class StratagemAggregateRoot : AggregateRoot<StratagemId>
+    public class StratagemAggregate : AggregateRoot<StratagemId>
     {
         /// <summary>
         /// Protected constructor
         /// </summary>
-        protected StratagemAggregateRoot() { }
+        protected StratagemAggregate() { }
 
         /// <summary>
         /// The phases relevant to this stratagem
@@ -23,7 +23,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// Constructor
         /// </summary>
         /// <param name="id">ID</param>
-        public StratagemAggregateRoot(StratagemId id)
+        public StratagemAggregate(StratagemId id)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
             Id = id;
@@ -34,7 +34,9 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// </summary>
         protected override void EnsureValidState()
         {
-            bool valid = true;
+            bool valid =
+                Id != null &&
+                Phases != null && Phases.Length > 0;
 
             if (!valid) throw new InvalidEntityStateException(this, $"Post-checks failed for stratagem");
         }
@@ -74,9 +76,8 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// <param name="e">Stratagem Created event</param>
         private void HandleStratagemCreated(Events.StratagemCreated e)
         {
-            // TODO: Implement!
-
-            throw new NotImplementedException();
+            Id = new StratagemId(e.Id);
+            Phases = e.Phases;
         }
     }
 
