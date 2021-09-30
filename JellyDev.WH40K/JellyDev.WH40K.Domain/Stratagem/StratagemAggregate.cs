@@ -1,4 +1,6 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel;
+using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
+using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using System;
 using static JellyDev.WH40K.Domain.SharedKernel.Exceptions;
 
@@ -20,13 +22,30 @@ namespace JellyDev.WH40K.Domain.Stratagem
         public Phase[] Phases { get; private set; }
 
         /// <summary>
+        /// Name of the stratagem
+        /// </summary>
+        public Name Name { get; private set;}
+
+        /// <summary>
+        /// Description of the stratagem
+        /// </summary>
+        public Description Description { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="id">ID</param>
-        public StratagemAggregate(StratagemId id)
+        /// <param name="createStratagemParamObj">Parameter object for creating a stratagem</param>
+        public StratagemAggregate(CreateStratagem createStratagemParamObj)
         {
-            if (id == null) throw new ArgumentNullException(nameof(id));
-            Id = id;
+            if (createStratagemParamObj == null) throw new ArgumentNullException(nameof(createStratagemParamObj));
+
+            Apply(new Events.StratagemCreated
+            {
+                Id = createStratagemParamObj.Id,
+                Phases = createStratagemParamObj.Phases,
+                Name = createStratagemParamObj.Name,
+                Description = createStratagemParamObj.Description
+            });
         }
 
         /// <summary>
@@ -39,21 +58,6 @@ namespace JellyDev.WH40K.Domain.Stratagem
                 Phases != null && Phases.Length > 0;
 
             if (!valid) throw new InvalidEntityStateException(this, $"Post-checks failed for stratagem");
-        }
-
-        /// <summary>
-        /// Create a new stratagem
-        /// </summary>
-        /// <param name="phases">The phases relevant to this stratagem</param>
-        public void Create(Phase[] phases)
-        {
-            if (phases == null) throw new ArgumentNullException(nameof(phases));
-
-            Apply(new Events.StratagemCreated
-            {
-                Id = Id,
-                Phases = phases
-            });
         }
 
         /// <summary>
@@ -78,6 +82,8 @@ namespace JellyDev.WH40K.Domain.Stratagem
         {
             Id = new StratagemId(e.Id);
             Phases = e.Phases;
+            Name = Name.FromString(e.Name);
+            Description = Description.FromString(e.Description);
         }
     }
 

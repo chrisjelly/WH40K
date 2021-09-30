@@ -1,4 +1,6 @@
-﻿using JellyDev.WH40K.Domain.Stratagem;
+﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
+using JellyDev.WH40K.Domain.Stratagem;
+using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using System;
 using System.Linq;
 using Xunit;
@@ -8,12 +10,9 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
     public class StratagemAggregateTests
     {
         [Fact]
-        public void Strategem_cannot_be_created_with_null_values()
+        public void Strategem_cannot_be_created_with_null_value()
         {
-            var strategem = new StratagemAggregate(new StratagemId(Guid.NewGuid()));
-
             Assert.Throws<ArgumentNullException>(() => new StratagemAggregate(null));
-            Assert.Throws<ArgumentNullException>(() => strategem.Create(null));
         }
 
         [Fact]
@@ -21,9 +20,11 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
         {
             var id = new StratagemId(Guid.NewGuid());
             var phases = new SharedKernel.Phase[] { SharedKernel.Phase.Movement, SharedKernel.Phase.Charge };
+            var name = Name.FromString("Test Stratagem");
+            var description = Description.FromString("These are the rules for the stratagem.");
+            var createStratagemParamObj = new CreateStratagem(id, phases, name, description);
             
-            var strategem = new StratagemAggregate(id);          
-            strategem.Create(phases);
+            var strategem = new StratagemAggregate(createStratagemParamObj);          
 
             Assert.Equal(id, strategem.Id);
             Assert.Equal(2, strategem.Phases.Length);

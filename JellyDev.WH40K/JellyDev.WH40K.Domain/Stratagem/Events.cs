@@ -22,6 +22,16 @@ namespace JellyDev.WH40K.Domain.Stratagem
             /// The phases relevant to this stratagem
             /// </summary>
             public Phase[] Phases { get; set; }
+
+            /// <summary>
+            /// Name of the stratagem
+            /// </summary>
+            public string Name { get; set; }
+
+            /// <summary>
+            /// Description of the stratagem
+            /// </summary>
+            public string Description { get; set; }
         }
     }
 }
