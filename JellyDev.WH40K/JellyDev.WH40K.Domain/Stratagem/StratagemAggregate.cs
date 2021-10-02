@@ -34,17 +34,45 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="createStratagemParamObj">Parameter object for creating a stratagem</param>
-        public StratagemAggregate(CreateStratagem createStratagemParamObj)
+        /// <param name="newStratagem">Parameter object for creating a stratagem</param>
+        public StratagemAggregate(NewStratagem newStratagem)
         {
-            if (createStratagemParamObj == null) throw new ArgumentNullException(nameof(createStratagemParamObj));
+            if (newStratagem == null) throw new ArgumentNullException(nameof(newStratagem));
 
             Apply(new Events.StratagemCreated
             {
-                Id = createStratagemParamObj.Id,
-                Phases = createStratagemParamObj.Phases,
-                Name = createStratagemParamObj.Name,
-                Description = createStratagemParamObj.Description
+                Id = newStratagem.Id,
+                Phases = newStratagem.Phases,
+                Name = newStratagem.Name,
+                Description = newStratagem.Description
+            });
+        }
+
+        /// <summary>
+        /// Update the stratagem
+        /// </summary>
+        /// <param name="changeStratagem">Parameter object for updating a stratagem</param>
+        public void Update(ChangeStratagem changeStratagem)
+        {
+            if (changeStratagem == null) throw new ArgumentNullException(nameof(changeStratagem));
+
+            Apply(new Events.StratagemUpdated
+            {
+                Id = Id,
+                Phases = changeStratagem.Phases,
+                Name = changeStratagem.Name,
+                Description = changeStratagem.Description
+            });
+        }
+
+        /// <summary>
+        /// Delete the stratagem
+        /// </summary>
+        public void Delete()
+        {
+            Apply(new Events.StratagemDeleted
+            {
+                Id = Id
             });
         }
 
@@ -55,7 +83,9 @@ namespace JellyDev.WH40K.Domain.Stratagem
         {
             bool valid =
                 Id != null &&
-                Phases != null && Phases.Length > 0;
+                Phases != null && Phases.Length > 0 &&
+                string.IsNullOrEmpty(Name) == false &&
+                string.IsNullOrEmpty(Description) == false;
 
             if (!valid) throw new InvalidEntityStateException(this, $"Post-checks failed for stratagem");
         }
@@ -71,6 +101,9 @@ namespace JellyDev.WH40K.Domain.Stratagem
                 case Events.StratagemCreated e:
                     HandleStratagemCreated(e);
                     break;
+                case Events.StratagemUpdated e:
+                    HandleStratagemUpdated(e);
+                    break;
             }
         }
 
@@ -81,6 +114,17 @@ namespace JellyDev.WH40K.Domain.Stratagem
         private void HandleStratagemCreated(Events.StratagemCreated e)
         {
             Id = new StratagemId(e.Id);
+            Phases = e.Phases;
+            Name = Name.FromString(e.Name);
+            Description = Description.FromString(e.Description);
+        }
+
+        /// <summary>
+        /// Stratagem Updated event handler
+        /// </summary>
+        /// <param name="e">Stratagem Updated event</param>
+        private void HandleStratagemUpdated(Events.StratagemUpdated e)
+        {
             Phases = e.Phases;
             Name = Name.FromString(e.Name);
             Description = Description.FromString(e.Description);

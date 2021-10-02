@@ -7,7 +7,7 @@ namespace JellyDev.WH40K.Domain.Stratagem.ParameterObjects
     /// <summary>
     /// Parameter object for creating a stratagem
     /// </summary>
-    public class CreateStratagem
+    public class NewStratagem
     {
         /// <summary>
         /// Unique ID of the stratagem
@@ -36,7 +36,7 @@ namespace JellyDev.WH40K.Domain.Stratagem.ParameterObjects
         /// <param name="phases">The phases relevant to the stratagem</param>
         /// <param name="name">Name of the stratagem</param>
         /// <param name="description">Description of the stratagem</param>
-        public CreateStratagem(StratagemId id, Phase[] phases, Name name, Description description)
+        public NewStratagem(StratagemId id, Phase[] phases, Name name, Description description)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
             if (phases == null) throw new ArgumentNullException(nameof(phases));
