@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JellyDev.WH40K.Infrastructure.Database.Contexts
+namespace JellyDev.WH40K.Infrastructure.Database.EfCore
 {
     /// <summary>
     /// Database context for the Stratagem aggregate
