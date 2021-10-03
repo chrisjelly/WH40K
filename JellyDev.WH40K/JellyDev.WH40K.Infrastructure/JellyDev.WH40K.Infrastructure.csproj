@@ -16,8 +16,4 @@
     <ProjectReference Include="..\JellyDev.WH40K.Domain\JellyDev.WH40K.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Stratagem\" />
-  </ItemGroup>
-
 </Project>
