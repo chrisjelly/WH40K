@@ -17,19 +17,19 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
         /// <summary>
         /// Stratagem repository
         /// </summary>
-        private readonly BaseRepository<StratagemDbContext, StratagemAggregate, StratagemId> _repository;
+        private readonly IRepository<StratagemAggregate, StratagemId> _repository;
 
         /// <summary>
         /// Stratagem unit of work
         /// </summary>
-        private readonly BaseUnitOfWork<StratagemDbContext> _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="repository">Stratagem repository</param>
         /// <param name="unitOfWork">Stratagem unit of work</param>
-        public CreateStratagemService(BaseRepository<StratagemDbContext, StratagemAggregate, StratagemId> repository, BaseUnitOfWork<StratagemDbContext> unitOfWork)
+        public CreateStratagemService(IRepository<StratagemAggregate, StratagemId> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;

@@ -11,7 +11,7 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
     /// <typeparam name="TDbContext">Type of database context</typeparam>
     /// <typeparam name="TAggregate">Type of aggregate</typeparam>
     /// <typeparam name="TId">Type of aggregate ID</typeparam>
-    public abstract class BaseRepository<TDbContext, TAggregate, TId>
+    public abstract class BaseRepository<TDbContext, TAggregate, TId> : IRepository<TAggregate, TId>
         where TDbContext : DbContext
         where TAggregate : AggregateRoot<TId>
         where TId : class

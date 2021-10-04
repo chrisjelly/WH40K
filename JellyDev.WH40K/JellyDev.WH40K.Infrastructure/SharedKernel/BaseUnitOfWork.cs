@@ -7,7 +7,7 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
     /// Abstract base class for units of work
     /// </summary>
     /// <typeparam name="TDbContext">Type of database context</typeparam>
-    public abstract class BaseUnitOfWork<TDbContext>
+    public abstract class BaseUnitOfWork<TDbContext> : IUnitOfWork
         where TDbContext : DbContext
     {
         /// <summary>
