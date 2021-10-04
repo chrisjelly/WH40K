@@ -5,10 +5,15 @@ using System;
 namespace JellyDev.WH40K.Domain.Stratagem.ParameterObjects
 {
     /// <summary>
-    /// Parameter object for updating a stratagem
+    /// Parameter object for creating a stratagem
     /// </summary>
-    public class ChangeStratagem
+    public class CreateStratagemParams
     {
+        /// <summary>
+        /// Unique ID of the stratagem
+        /// </summary>
+        public readonly StratagemId Id;
+
         /// <summary>
         /// The phases relevant to the stratagem
         /// </summary>
@@ -27,15 +32,18 @@ namespace JellyDev.WH40K.Domain.Stratagem.ParameterObjects
         /// <summary>
         /// Create the parameter object
         /// </summary>
+        /// <param name="id">Unique ID of the stratagem</param>
         /// <param name="phases">The phases relevant to the stratagem</param>
         /// <param name="name">Name of the stratagem</param>
         /// <param name="description">Description of the stratagem</param>
-        public ChangeStratagem(Phase[] phases, Name name, Description description)
+        public CreateStratagemParams(StratagemId id, Phase[] phases, Name name, Description description)
         {
+            if (id == null) throw new ArgumentNullException(nameof(id));
             if (phases == null) throw new ArgumentNullException(nameof(phases));
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (description == null) throw new ArgumentNullException(nameof(description));
 
+            Id = id;
             Phases = phases;
             Name = name;
             Description = description;

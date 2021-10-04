@@ -22,8 +22,8 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var phases = new SharedKernel.Phase[] { SharedKernel.Phase.Movement, SharedKernel.Phase.Charge };
             var name = Name.FromString("Test Stratagem");
             var description = Description.FromString("These are the rules for the stratagem.");
-            var newStratagem = new NewStratagem(id, phases, name, description);         
-            var strategem = new StratagemAggregate(newStratagem);          
+            var createStratagemParams = new CreateStratagemParams(id, phases, name, description);         
+            var strategem = new StratagemAggregate(createStratagemParams);          
 
             Assert.Equal(id, strategem.Id);
             Assert.Equal(2, strategem.Phases.Length);
@@ -48,8 +48,8 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var phases = new SharedKernel.Phase[] { SharedKernel.Phase.Shooting };
             var name = Name.FromString("Updated Stratagem");
             var description = Description.FromString("This is an updated stratagem.");
-            var changeStratagem = new ChangeStratagem(phases, name, description);
-            stratagem.Update(changeStratagem);
+            var updateStratagemParams = new UpdateStratagemParams(phases, name, description);
+            stratagem.Update(updateStratagemParams);
 
             Assert.Single(stratagem.Phases);
             Assert.True(stratagem.Phases.Where(x => x == SharedKernel.Phase.Shooting).Count() > 0);
@@ -67,7 +67,7 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var phases = new SharedKernel.Phase[] { SharedKernel.Phase.Movement, SharedKernel.Phase.Charge };
             var name = Name.FromString("Test Stratagem");
             var description = Description.FromString("These are the rules for the stratagem.");
-            return new StratagemAggregate(new NewStratagem(id, phases, name, description));
+            return new StratagemAggregate(new CreateStratagemParams(id, phases, name, description));
         }
     }
 }

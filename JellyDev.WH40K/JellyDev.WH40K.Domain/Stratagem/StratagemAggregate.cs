@@ -34,34 +34,34 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="newStratagem">Parameter object for creating a stratagem</param>
-        public StratagemAggregate(NewStratagem newStratagem)
+        /// <param name="createStratagemParams">Parameter object for creating a stratagem</param>
+        public StratagemAggregate(CreateStratagemParams createStratagemParams)
         {
-            if (newStratagem == null) throw new ArgumentNullException(nameof(newStratagem));
+            if (createStratagemParams == null) throw new ArgumentNullException(nameof(createStratagemParams));
 
             Apply(new Events.StratagemCreated
             {
-                Id = newStratagem.Id,
-                Phases = newStratagem.Phases,
-                Name = newStratagem.Name,
-                Description = newStratagem.Description
+                Id = createStratagemParams.Id,
+                Phases = createStratagemParams.Phases,
+                Name = createStratagemParams.Name,
+                Description = createStratagemParams.Description
             });
         }
 
         /// <summary>
         /// Update the stratagem
         /// </summary>
-        /// <param name="changeStratagem">Parameter object for updating a stratagem</param>
-        public void Update(ChangeStratagem changeStratagem)
+        /// <param name="updateStratagemParams">Parameter object for updating a stratagem</param>
+        public void Update(UpdateStratagemParams updateStratagemParams)
         {
-            if (changeStratagem == null) throw new ArgumentNullException(nameof(changeStratagem));
+            if (updateStratagemParams == null) throw new ArgumentNullException(nameof(updateStratagemParams));
 
             Apply(new Events.StratagemUpdated
             {
                 Id = Id,
-                Phases = changeStratagem.Phases,
-                Name = changeStratagem.Name,
-                Description = changeStratagem.Description
+                Phases = updateStratagemParams.Phases,
+                Name = updateStratagemParams.Name,
+                Description = updateStratagemParams.Description
             });
         }
 

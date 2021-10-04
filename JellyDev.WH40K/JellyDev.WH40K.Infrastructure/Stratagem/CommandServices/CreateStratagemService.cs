@@ -44,12 +44,12 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
             if (command.Id == Guid.Empty) command.Id = Guid.NewGuid();
             if (_repository.Exists(command.Id.ToString())) throw new InvalidOperationException($"Stratagem with id {command.Id} already exists");
 
-            var newStratagem = new NewStratagem(new StratagemId(command.Id), 
+            var createStratagemParams = new CreateStratagemParams(new StratagemId(command.Id), 
                 command.Phases, 
                 Name.FromString(command.Name), 
                 Description.FromString(command.Description));
 
-            var stratagem = new StratagemAggregate(newStratagem);
+            var stratagem = new StratagemAggregate(createStratagemParams);
 
             await _repository.AddAsync(stratagem);
             await _unitOfWork.CommitAsync();
