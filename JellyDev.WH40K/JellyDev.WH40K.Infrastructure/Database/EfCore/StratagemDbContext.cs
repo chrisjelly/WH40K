@@ -22,6 +22,15 @@ namespace JellyDev.WH40K.Infrastructure.Database.EfCore
         public StratagemDbContext(DbContextOptions<StratagemDbContext> options) : base(options) { }
 
         /// <summary>
+        /// On model creating override
+        /// </summary>
+        /// <param name="modelBuilder">Model builder</param>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new StratagemEntityTypeConfiguration());
+        }
+
+        /// <summary>
         /// Stratagem aggregate type configuration
         /// </summary>
         public class StratagemEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Stratagem.StratagemAggregate>
@@ -42,7 +51,7 @@ namespace JellyDev.WH40K.Infrastructure.Database.EfCore
                     );
 
                 // Setup the mapping table of phases
-                builder.OwnsMany(x => x.Phases.Select(x => x.ToString()).ToArray(), x =>
+                builder.OwnsMany(x => x.Phases, x =>
                 {
                     x.Property<StratagemId>("StratagemId")
                         .HasColumnName("StratagemId")

@@ -1,5 +1,6 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel;
+﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using System;
+using System.Collections.Generic;
 
 namespace JellyDev.WH40K.Domain.Stratagem
 {
@@ -21,7 +22,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
             /// <summary>
             /// The phases relevant to this stratagem
             /// </summary>
-            public Phase[] Phases { get; set; }
+            public ICollection<Phase> Phases { get; set; }
 
             /// <summary>
             /// Name of the stratagem
@@ -47,7 +48,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
             /// <summary>
             /// The phases relevant to this stratagem
             /// </summary>
-            public Phase[] Phases { get; set; }
+            public ICollection<Phase> Phases { get; set; }
 
             /// <summary>
             /// Name of the stratagem

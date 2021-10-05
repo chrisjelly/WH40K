@@ -2,6 +2,8 @@
 using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using static JellyDev.WH40K.Domain.SharedKernel.Exceptions;
 
 namespace JellyDev.WH40K.Domain.Stratagem
@@ -19,7 +21,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// <summary>
         /// The phases relevant to this stratagem
         /// </summary>
-        public Phase[] Phases { get; private set; }
+        public ICollection<Phase> Phases { get; private set; }
 
         /// <summary>
         /// Name of the stratagem
@@ -83,7 +85,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
         {
             bool valid =
                 Id != null &&
-                Phases != null && Phases.Length > 0 &&
+                Phases != null &&
                 string.IsNullOrEmpty(Name) == false &&
                 string.IsNullOrEmpty(Description) == false;
 

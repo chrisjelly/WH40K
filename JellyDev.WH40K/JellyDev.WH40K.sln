@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JellyDev.WH40K.Domain.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JellyDev.WH40K.Infrastructure", "JellyDev.WH40K.Infrastructure\JellyDev.WH40K.Infrastructure.csproj", "{BFEF133F-83DD-4256-92EA-F59AB6E870EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JellyDev.WH40K.Infrastructure.Tests", "JellyDev.WH40K.Infrastructure.Tests\JellyDev.WH40K.Infrastructure.Tests.csproj", "{F8660C91-34C6-46A6-851B-D6510996B83F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JellyDev.WH40K.Infrastructure.Tests", "JellyDev.WH40K.Infrastructure.Tests\JellyDev.WH40K.Infrastructure.Tests.csproj", "{F8660C91-34C6-46A6-851B-D6510996B83F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JellyDev.WH40K.Api", "JellyDev.WH40K.Api\JellyDev.WH40K.Api.csproj", "{A77F8EAD-C2B3-4CFE-868F-39C36DBA22EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F8660C91-34C6-46A6-851B-D6510996B83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8660C91-34C6-46A6-851B-D6510996B83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8660C91-34C6-46A6-851B-D6510996B83F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A77F8EAD-C2B3-4CFE-868F-39C36DBA22EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A77F8EAD-C2B3-4CFE-868F-39C36DBA22EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A77F8EAD-C2B3-4CFE-868F-39C36DBA22EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A77F8EAD-C2B3-4CFE-868F-39C36DBA22EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

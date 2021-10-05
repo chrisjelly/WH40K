@@ -4,8 +4,11 @@ using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using JellyDev.WH40K.Infrastructure.Database.EfCore;
 using JellyDev.WH40K.Infrastructure.SharedKernel;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using static JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
+using System.Linq;
+using MoreLinq;
 
 namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
 {
@@ -44,8 +47,11 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
             if (command.Id == Guid.Empty) command.Id = Guid.NewGuid();
             if (_repository.Exists(command.Id.ToString())) throw new InvalidOperationException($"Stratagem with id {command.Id} already exists");
 
+            var phases = new List<Phase>();
+            command.Phases.ForEach(x => phases.Add(Phase.FromEnum(x)));
+
             var createStratagemParams = new CreateStratagemParams(new StratagemId(command.Id), 
-                command.Phases, 
+                phases, 
                 Name.FromString(command.Name), 
                 Description.FromString(command.Description));
 

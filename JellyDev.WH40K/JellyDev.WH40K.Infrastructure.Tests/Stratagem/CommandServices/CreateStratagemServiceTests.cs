@@ -1,9 +1,11 @@
+using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Infrastructure.Database.EfCore;
 using JellyDev.WH40K.Infrastructure.SharedKernel;
 using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 using static JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
@@ -34,7 +36,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests
             CreateStratagem command = new CreateStratagem
             {
                 Id = Guid.NewGuid(),
-                Phases = new Domain.SharedKernel.Phase[] { Domain.SharedKernel.Phase.Charge },
+                Phases = new List<PhaseEnum> { PhaseEnum.Charge },
                 Name = "Test",
                 Description = "This is a test stratagem."
             };
