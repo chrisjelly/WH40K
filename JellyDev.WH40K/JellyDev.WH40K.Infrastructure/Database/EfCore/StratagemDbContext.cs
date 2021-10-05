@@ -56,11 +56,11 @@ namespace JellyDev.WH40K.Infrastructure.Database.EfCore
                     x.Property<StratagemId>("StratagemId")
                         .HasColumnName("StratagemId")
                         .HasColumnType("uniqueidentifier");
-                    x.Property<Guid>("Phase")
+                    x.Property<PhaseEnum>("Value")
                         .HasColumnName("Phase")
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("int");
                     x.Property<DateTime>("Created");
-                    x.HasKey("StratagemId", "Phase");
+                    x.HasKey("StratagemId", "Value");
                     x.ToTable("Stratagem_Phases", Constants.DB_SCHEMA);
                     x.WithOwner()
                         .HasForeignKey("StratagemId");
