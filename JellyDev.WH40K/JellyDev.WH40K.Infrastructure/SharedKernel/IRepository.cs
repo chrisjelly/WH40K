@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using JellyDev.WH40K.Domain.SharedKernel;
 
 namespace JellyDev.WH40K.Infrastructure.SharedKernel
 {
@@ -7,33 +7,10 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
     /// </summary>
     /// <typeparam name="TAggregate">Type of aggregate</typeparam>
     /// <typeparam name="TId">Type of aggregate ID</typeparam>
-    public interface IRepository<TAggregate, TId>
+    public interface IRepository<TAggregate, TId> : IRepositoryCreator<TAggregate, TId>, IRepositoryUpdater<TAggregate, TId>
+        where TAggregate : AggregateRoot<TId>
+        where TId : class
     {
-        /// <summary>
-        /// Load an aggregate
-        /// </summary>
-        /// <param name="id">ID of the issuer environment</param>
-        /// <returns>The requested issuer environment</returns>
-        TAggregate Load(TId id);
 
-        /// <summary>
-        /// Add a new aggregate
-        /// </summary>
-        /// <param name="entity">The new aggregate</param>
-        /// <returns>Task</returns>
-        Task AddAsync(TAggregate entity);
-
-        /// <summary>
-        /// Check for the existence of an aggregate
-        /// </summary>
-        /// <param name="id">ID of the aggregate</param>
-        /// <returns>True if the aggregate exists</returns>
-        bool Exists(TId id);
-
-        /// <summary>
-        /// Update an aggregate
-        /// </summary>
-        /// <param name="entity">The updated aggregate</param>
-        void Update(TAggregate entity);
     }
 }

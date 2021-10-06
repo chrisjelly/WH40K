@@ -1,6 +1,5 @@
 using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
-using JellyDev.WH40K.Infrastructure.Database.EfCore;
 using JellyDev.WH40K.Infrastructure.SharedKernel;
 using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
 using Moq;
@@ -21,11 +20,11 @@ namespace JellyDev.WH40K.Infrastructure.Tests
             {
                 Id = Guid.NewGuid()
             };
-            var repository = new Mock<IRepository<StratagemAggregate, StratagemId>>();
-            repository.Setup(x => x.Exists(new StratagemId(command.Id)))
+            var repositoryCreator = new Mock<IRepositoryCreator<StratagemAggregate, StratagemId>>();
+            repositoryCreator.Setup(x => x.Exists(new StratagemId(command.Id)))
                 .Returns(true);
             var unitOfWork = new Mock<IUnitOfWork>();
-            var commandSvc = new CreateStratagemService(repository.Object, unitOfWork.Object);
+            var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
 
             Assert.ThrowsAsync<InvalidOperationException>(() => commandSvc.ExecuteAsync(command));
         }
@@ -40,14 +39,14 @@ namespace JellyDev.WH40K.Infrastructure.Tests
                 Name = "Test",
                 Description = "This is a test stratagem."
             };
-            var repository = new Mock<IRepository<StratagemAggregate, StratagemId>>();
-            repository.Setup(x => x.Exists(new StratagemId(command.Id)))
+            var repositoryCreator = new Mock<IRepositoryCreator<StratagemAggregate, StratagemId>>();
+            repositoryCreator.Setup(x => x.Exists(new StratagemId(command.Id)))
                 .Returns(false);
             var unitOfWork = new Mock<IUnitOfWork>();
-            var commandSvc = new CreateStratagemService(repository.Object, unitOfWork.Object);
+            var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
             await commandSvc.ExecuteAsync(command);
 
-            repository.Verify(x => x.AddAsync(It.IsAny<StratagemAggregate>()), Times.Once);
+            repositoryCreator.Verify(x => x.AddAsync(It.IsAny<StratagemAggregate>()), Times.Once);
             unitOfWork.Verify(x => x.CommitAsync(), Times.Once);
         }
     }
