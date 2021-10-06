@@ -5,19 +5,15 @@ using JellyDev.WH40K.Infrastructure.Stratagem;
 using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 using Microsoft.EntityFrameworkCore;
+using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
+using JellyDev.WH40K.Infrastructure.Stratagem.QueryServices;
+using System.Data.Common;
+using Microsoft.Data.SqlClient;
 
 namespace JellyDev.WH40K.Api
 {
@@ -45,11 +41,13 @@ namespace JellyDev.WH40K.Api
             {
                 opt.UseSqlServer(connectionString);
             });
+            services.AddScoped<DbConnection>(c => new SqlConnection(connectionString));
 
             // Composition root
             services.AddScoped<IAsyncCommandService<CreateStratagem>, CreateStratagemService>();
-            services.AddScoped<IRepository<StratagemAggregate, StratagemId>, StratagemRepository>();
+            services.AddScoped<IRepositoryCreator<StratagemAggregate, StratagemId>, StratagemRepository>();
             services.AddScoped<IUnitOfWork, StratagemUnitOfWork>();
+            services.AddScoped<IAsyncQueryService<Infrastructure.Stratagem.ReadModels.Stratagem, Infrastructure.Stratagem.QueryModels.ListStratagems>, ListStratagemsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

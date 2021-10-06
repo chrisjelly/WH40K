@@ -1,11 +1,7 @@
 ﻿using JellyDev.WH40K.Infrastructure.SharedKernel;
-using Microsoft.AspNetCore.Http;
+using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using static JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 
 namespace JellyDev.WH40K.Api.Commands
 {
@@ -16,15 +12,15 @@ namespace JellyDev.WH40K.Api.Commands
         /// <summary>
         /// Create Stratagem command service
         /// </summary>
-        private readonly IAsyncCommandService<CreateStratagem> _createStratagemCmdSvc;
+        private readonly IAsyncCommandService<CreateStratagem> _createStratagemSvc;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="createStratagemCmdSvc">Create Stratagem command service</param>
-        public StratagemCommandApi(IAsyncCommandService<CreateStratagem> createStratagemCmdSvc)
+        /// <param name="createStratagemSvc">Create Stratagem command service</param>
+        public StratagemCommandApi(IAsyncCommandService<CreateStratagem> createStratagemSvc)
         {
-            _createStratagemCmdSvc = createStratagemCmdSvc;
+            _createStratagemSvc = createStratagemSvc;
         }
 
         /// <summary>
@@ -35,7 +31,7 @@ namespace JellyDev.WH40K.Api.Commands
         [HttpPost]
         public async Task<IActionResult> PostAsync(CreateStratagem createStratagemCmd)
         {
-            await _createStratagemCmdSvc.ExecuteAsync(createStratagemCmd);
+            await _createStratagemSvc.ExecuteAsync(createStratagemCmd);
             return new OkResult();
         }
     }

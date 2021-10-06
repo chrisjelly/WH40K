@@ -5,8 +5,8 @@ using JellyDev.WH40K.Infrastructure.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 using MoreLinq;
+using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 
 namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
 {
