@@ -1,7 +1,10 @@
-﻿using JellyDev.WH40K.Infrastructure.SharedKernel;
+﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
+using JellyDev.WH40K.Infrastructure.SharedKernel;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace JellyDev.WH40K.Infrastructure.Stratagem.QueryServices
 {
@@ -33,9 +36,27 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.QueryServices
         {
             IEnumerable<ReadModels.Stratagem> stratagems = await _connection.QueryAsync(queryModel);
 
-            // TODO: Get the phases for each stratagem
+            foreach(ReadModels.Stratagem stratagem in stratagems)
+            {
+                stratagem.Phases = await ListPhasesAsync(stratagem.Id);
+            }
 
             return stratagems;
+        }
+
+        /// <summary>
+        /// List the phases for a stratagem
+        /// </summary>
+        /// <param name="stratagemId">ID of the stratagem</param>
+        /// <returns>Phases for the stratagem</returns>
+        private async Task<PhaseEnum[]> ListPhasesAsync(Guid stratagemId)
+        {
+            var queryModel = new QueryModels.ListStratagemPhases
+            {
+                StratagemId = stratagemId
+            };
+            IEnumerable<PhaseEnum> phases = await _connection.QueryAsync(queryModel);
+            return phases.ToArray();
         }
     }
 }

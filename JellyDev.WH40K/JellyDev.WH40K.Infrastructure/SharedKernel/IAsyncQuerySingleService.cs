@@ -8,7 +8,6 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
     /// <typeparam name="TReadModel">Type of read model</typeparam>
     /// <typeparam name="TQueryModel">Type of query model</typeparam>
     public interface IAsyncQuerySingleService<TReadModel, TQueryModel>
-        where TReadModel : class
         where TQueryModel : class
     {
         /// <summary>
