@@ -6,7 +6,9 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
     /// <summary>
     /// Interface for adding new aggregates to a repository
     /// </summary>
-    public interface IRepositoryCreator<TAggregate, TId>
+    /// <typeparam name="TAggregate">Type of aggregate stored in the repository</typeparam>
+    /// <typeparam name="TId">Type of aggregate ID</typeparam>
+    public interface IRepositoryCreator<TAggregate, TId> : IRepositoryChecker<TId>
         where TAggregate : AggregateRoot<TId>
         where TId : class
     {
@@ -16,12 +18,5 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
         /// <param name="entity">The new aggregate</param>
         /// <returns>Task</returns>
         Task AddAsync(TAggregate entity);
-
-        /// <summary>
-        /// Check for the existence of an aggregate
-        /// </summary>
-        /// <param name="id">ID of the aggregate</param>
-        /// <returns>True if the aggregate exists</returns>
-        bool Exists(TId id);
     }
 }

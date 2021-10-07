@@ -9,14 +9,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace JellyDev.WH40K.Infrastructure.Tests
+namespace JellyDev.WH40K.Infrastructure.Tests.CommandServices
 {
     public class CreateStratagemServiceTests
     {
         [Fact]
-        public void CreateStratagemService_throws_exception_when_ID_exists()
+        public void CreateStratagemService_throws_exception_when_stratagem_exists()
         {
-            CreateStratagem command = new CreateStratagem
+            // Arrange
+            var command = new CreateStratagem
             {
                 Id = Guid.NewGuid()
             };
@@ -26,13 +27,15 @@ namespace JellyDev.WH40K.Infrastructure.Tests
             var unitOfWork = new Mock<IUnitOfWork>();
             var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
 
+            // Assert
             Assert.ThrowsAsync<InvalidOperationException>(() => commandSvc.ExecuteAsync(command));
         }
 
         [Fact]
         public async Task CreateStratagemService_can_execute_successfully()
         {
-            CreateStratagem command = new CreateStratagem
+            // Arrange
+            var command = new CreateStratagem
             {
                 Id = Guid.NewGuid(),
                 Phases = new List<PhaseEnum> { PhaseEnum.Charge },
@@ -44,8 +47,11 @@ namespace JellyDev.WH40K.Infrastructure.Tests
                 .Returns(false);
             var unitOfWork = new Mock<IUnitOfWork>();
             var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
+
+            // Act
             await commandSvc.ExecuteAsync(command);
 
+            // Assert
             repositoryCreator.Verify(x => x.AddAsync(It.IsAny<StratagemAggregate>()), Times.Once);
             unitOfWork.Verify(x => x.CommitAsync(), Times.Once);
         }

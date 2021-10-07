@@ -5,6 +5,8 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
     /// <summary>
     /// Interface for updating aggregates in a repository
     /// </summary>
+    /// <typeparam name="TAggregate">Type of aggregate stored in the repository</typeparam>
+    /// <typeparam name="TId">Type of aggregate ID</typeparam>
     public interface IRepositoryUpdater<TAggregate, TId>
         where TAggregate : AggregateRoot<TId>
         where TId : class
