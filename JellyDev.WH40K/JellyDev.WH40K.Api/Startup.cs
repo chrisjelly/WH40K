@@ -14,6 +14,8 @@ using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 using JellyDev.WH40K.Infrastructure.Stratagem.QueryServices;
 using System.Data.Common;
 using Microsoft.Data.SqlClient;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace JellyDev.WH40K.Api
 {
@@ -25,6 +27,14 @@ namespace JellyDev.WH40K.Api
         }
 
         public IConfiguration Configuration { get; }
+
+        public ILifetimeScope AutofacContainer { get; private set; }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            string connectionString = Configuration.GetConnectionString("JellyDev");
+            builder.RegisterModule(new AutofacModule(connectionString));
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,18 +51,13 @@ namespace JellyDev.WH40K.Api
             {
                 opt.UseSqlServer(connectionString);
             });
-            services.AddScoped<DbConnection>(c => new SqlConnection(connectionString));
-
-            // Composition root
-            services.AddScoped<IAsyncCommandService<CreateStratagem>, CreateStratagemService>();
-            services.AddScoped<IRepositoryCreator<StratagemAggregate, StratagemId>, StratagemRepository>();
-            services.AddScoped<IUnitOfWork, StratagemUnitOfWork>();
-            services.AddScoped<IAsyncQueryService<Infrastructure.Stratagem.ReadModels.Stratagem, Infrastructure.Stratagem.QueryModels.ListStratagems>, ListStratagemsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, StratagemDbContext stratagemDbContext)
         {
+            AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
