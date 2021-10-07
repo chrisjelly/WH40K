@@ -1,11 +1,6 @@
 ﻿using Autofac;
-using JellyDev.WH40K.Domain.Stratagem;
-using JellyDev.WH40K.Infrastructure.Database.EfCore;
 using JellyDev.WH40K.Infrastructure.SharedKernel;
-using JellyDev.WH40K.Infrastructure.Stratagem;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
-using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
-using JellyDev.WH40K.Infrastructure.Stratagem.QueryServices;
 using Microsoft.Data.SqlClient;
 using System.Data.Common;
 
@@ -22,23 +17,28 @@ namespace JellyDev.WH40K.Api
 
         protected override void Load(ContainerBuilder builder)
         {
+            System.Reflection.Assembly assembly = typeof(CreateStratagem).Assembly;
+
+            // Register database connection for Dapper queries
             builder.Register<DbConnection>(x => new SqlConnection(_connectionString));
 
-            builder.RegisterType<StratagemUnitOfWork>()
+            // Register unit of work
+            builder.RegisterAssemblyTypes(assembly)
                 .As<IUnitOfWork>();
 
-            builder.RegisterType<StratagemRepository>()
-                .As<IRepositoryCreator<StratagemAggregate, StratagemId>>();
-            builder.RegisterType<StratagemRepository>()
-                .As<IRepositoryUpdater<StratagemAggregate, StratagemId>>();
+            // Register repositories
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IRepositoryCreator<,>));
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IRepositoryUpdater<,>));
 
-            builder.RegisterType<CreateStratagemService>()
-                .As<IAsyncCommandService<CreateStratagem>>();
-            builder.RegisterType<UpdateStratagemService>()
-                .As<IAsyncCommandService<UpdateStratagem>>();
+            // Register async command services
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IAsyncCommandService<>));
 
-            builder.RegisterType<ListStratagemsService>()
-                .As<IAsyncQueryService<Infrastructure.Stratagem.ReadModels.Stratagem, Infrastructure.Stratagem.QueryModels.ListStratagems>>();
+            // Register async query services
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IAsyncQueryService<,>));
         }
     }
 }
