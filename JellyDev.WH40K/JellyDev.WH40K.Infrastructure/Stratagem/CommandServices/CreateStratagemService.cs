@@ -51,7 +51,8 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
             var createStratagemParams = new CreateStratagemParams(new StratagemId(command.Id), 
                 phases, 
                 Name.FromString(command.Name), 
-                Description.FromString(command.Description));
+                Description.FromString(command.Description),
+                Amount.FromInt(command.CommandPoints));
 
             var stratagem = new StratagemAggregate(createStratagemParams);
 

@@ -27,5 +27,10 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.ReadModels
         /// Description of the stratagem
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// The command points cost for the stratagem
+        /// </summary>
+        public string CommandPoints { get; set; }
     }
 }

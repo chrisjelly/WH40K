@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JellyDev.WH40K.Infrastructure.Migrations
 {
     [DbContext(typeof(StratagemDbContext))]
-    [Migration("20211005090602_Initial")]
+    [Migration("20211008060125_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,10 @@ namespace JellyDev.WH40K.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("CommandPoints")
+                        .HasColumnType("int")
+                        .HasColumnName("CommandPoints");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");

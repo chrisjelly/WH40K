@@ -34,6 +34,11 @@ namespace JellyDev.WH40K.Domain.Stratagem
         public Description Description { get; private set; }
 
         /// <summary>
+        /// The command points cost for the stratagem
+        /// </summary>
+        public Amount CommandPoints { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="createStratagemParams">Parameter object for creating a stratagem</param>
@@ -46,7 +51,8 @@ namespace JellyDev.WH40K.Domain.Stratagem
                 Id = createStratagemParams.Id,
                 Phases = createStratagemParams.Phases,
                 Name = createStratagemParams.Name,
-                Description = createStratagemParams.Description
+                Description = createStratagemParams.Description,
+                CommandPoints = createStratagemParams.CommandPoints
             });
         }
 
@@ -63,7 +69,8 @@ namespace JellyDev.WH40K.Domain.Stratagem
                 Id = Id,
                 Phases = updateStratagemParams.Phases,
                 Name = updateStratagemParams.Name,
-                Description = updateStratagemParams.Description
+                Description = updateStratagemParams.Description,
+                CommandPoints = updateStratagemParams.CommandPoints
             });
         }
 
@@ -87,7 +94,8 @@ namespace JellyDev.WH40K.Domain.Stratagem
                 Id != null &&
                 Phases != null &&
                 string.IsNullOrEmpty(Name) == false &&
-                string.IsNullOrEmpty(Description) == false;
+                string.IsNullOrEmpty(Description) == false &&
+                CommandPoints != null;
 
             if (!valid) throw new InvalidEntityStateException(this, $"Post-checks failed for stratagem");
         }
@@ -119,6 +127,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
             Phases = e.Phases;
             Name = Name.FromString(e.Name);
             Description = Description.FromString(e.Description);
+            CommandPoints = Amount.FromInt(e.CommandPoints);
         }
 
         /// <summary>
@@ -130,6 +139,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
             Phases = e.Phases;
             Name = Name.FromString(e.Name);
             Description = Description.FromString(e.Description);
+            CommandPoints = Amount.FromInt(e.CommandPoints);
         }
     }
 

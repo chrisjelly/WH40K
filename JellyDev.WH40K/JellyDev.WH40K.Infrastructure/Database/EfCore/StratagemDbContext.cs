@@ -79,6 +79,12 @@ namespace JellyDev.WH40K.Infrastructure.Database.EfCore
                         x => Description.FromString(x))
                     .HasColumnName("Description");
 
+                builder.Property(x => x.CommandPoints)
+                    .HasConversion(
+                        x => x.Value,
+                        x => Amount.FromInt(x))
+                    .HasColumnName("CommandPoints");
+
                 // Setup shadow properties
                 builder.Property<DateTime>("Created");
                 builder.Property<DateTime?>("LastUpdated");

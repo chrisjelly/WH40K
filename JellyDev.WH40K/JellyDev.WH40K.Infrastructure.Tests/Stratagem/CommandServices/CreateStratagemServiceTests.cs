@@ -40,7 +40,8 @@ namespace JellyDev.WH40K.Infrastructure.Tests.CommandServices
                 Id = Guid.NewGuid(),
                 Phases = new List<PhaseEnum> { PhaseEnum.Charge },
                 Name = "Test",
-                Description = "This is a test stratagem."
+                Description = "This is a test stratagem.",
+                CommandPoints = 2
             };
             var repositoryCreator = new Mock<IRepositoryCreator<StratagemAggregate, StratagemId>>();
             repositoryCreator.Setup(x => x.Exists(new StratagemId(command.Id)))

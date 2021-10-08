@@ -33,6 +33,11 @@ namespace JellyDev.WH40K.Domain.Stratagem
             /// Description of the stratagem
             /// </summary>
             public string Description { get; set; }
+
+            /// <summary>
+            /// The command points cost for the stratagem
+            /// </summary>
+            public int CommandPoints { get; set; }
         }
 
         /// <summary>
@@ -59,6 +64,11 @@ namespace JellyDev.WH40K.Domain.Stratagem
             /// Description of the stratagem
             /// </summary>
             public string Description { get; set; }
+
+            /// <summary>
+            /// The command points cost for the stratagem
+            /// </summary>
+            public int CommandPoints { get; set; }
         }
 
         /// <summary>

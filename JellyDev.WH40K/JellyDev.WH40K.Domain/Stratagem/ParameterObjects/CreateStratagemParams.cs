@@ -1,5 +1,4 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel;
-using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
+﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using System;
 using System.Collections.Generic;
 
@@ -31,23 +30,31 @@ namespace JellyDev.WH40K.Domain.Stratagem.ParameterObjects
         public readonly Description Description;
 
         /// <summary>
+        /// The command points cost for the stratagem
+        /// </summary>
+        public readonly Amount CommandPoints;
+
+        /// <summary>
         /// Create the parameter object
         /// </summary>
         /// <param name="id">Unique ID of the stratagem</param>
         /// <param name="phases">The phases relevant to the stratagem</param>
         /// <param name="name">Name of the stratagem</param>
         /// <param name="description">Description of the stratagem</param>
-        public CreateStratagemParams(StratagemId id, ICollection<Phase> phases, Name name, Description description)
+        /// <param name="commandPoints">The command points cost for the stratagem</param>
+        public CreateStratagemParams(StratagemId id, ICollection<Phase> phases, Name name, Description description, Amount commandPoints)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
             if (phases == null) throw new ArgumentNullException(nameof(phases));
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (description == null) throw new ArgumentNullException(nameof(description));
+            if (commandPoints == null) throw new ArgumentNullException(nameof(commandPoints));
 
             Id = id;
             Phases = phases;
             Name = name;
             Description = description;
+            CommandPoints = commandPoints;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem
             this DbConnection connection,
             QueryModels.ListStratagems query)
             => connection.QueryAsync<ReadModels.Stratagem>(
-                "SELECT s.\"Id\", s.\"Name\",  s.\"Description\" " +
+                "SELECT s.\"Id\", s.\"Name\",  s.\"Description\", s.\"CommandPoints\" " +
                 "FROM WH.\"Stratagems\" s " +
                 "ORDER BY s.\"Id\" " +
                 "OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY",

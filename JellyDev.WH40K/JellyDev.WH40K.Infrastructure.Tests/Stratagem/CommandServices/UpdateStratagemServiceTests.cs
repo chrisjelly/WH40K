@@ -38,10 +38,12 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
             var phases = new List<Phase> { Phase.FromEnum(PhaseEnum.Shooting) };
             var name = Name.FromString("Test");
             var description = Description.FromString("This is a test stratagem.");
+            var commandPoints = Amount.FromInt(2);
             var createStratagemParams = new CreateStratagemParams(new StratagemId(Guid.NewGuid()),
                        phases,
                        name,
-                       description);
+                       description,
+                       commandPoints);
             var stratagem = new StratagemAggregate(createStratagemParams);
 
             var repositoryUpdater = new Mock<IRepositoryUpdater<StratagemAggregate, StratagemId>>();

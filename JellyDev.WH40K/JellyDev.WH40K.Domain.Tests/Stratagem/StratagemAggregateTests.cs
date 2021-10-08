@@ -23,7 +23,8 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var phases = new List<Phase> { Phase.FromEnum(PhaseEnum.Movement), Phase.FromEnum(PhaseEnum.Charge) };
             var name = Name.FromString("Test Stratagem");
             var description = Description.FromString("These are the rules for the stratagem.");
-            var createStratagemParams = new CreateStratagemParams(id, phases, name, description);         
+            var commandPoints = Amount.FromInt(2);
+            var createStratagemParams = new CreateStratagemParams(id, phases, name, description, commandPoints);         
             var strategem = new StratagemAggregate(createStratagemParams);          
 
             Assert.Equal(id, strategem.Id);
@@ -31,6 +32,7 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             Assert.True(strategem.Phases.Where(x => x.Value == PhaseEnum.Charge).Count() > 0);
             Assert.Equal(name, strategem.Name);
             Assert.Equal(description, strategem.Description);
+            Assert.Equal(commandPoints, strategem.CommandPoints);
         }
 
         [Fact]
@@ -48,12 +50,14 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var phases = new List<Phase> { Phase.FromEnum(PhaseEnum.Shooting) };
             var name = Name.FromString("Updated Stratagem");
             var description = Description.FromString("This is an updated stratagem.");
-            var updateStratagemParams = new UpdateStratagemParams(phases, name, description);
+            var commandPoints = Amount.FromInt(5);
+            var updateStratagemParams = new UpdateStratagemParams(phases, name, description, commandPoints);
             stratagem.Update(updateStratagemParams);
 
             Assert.True(stratagem.Phases.Where(x => x.Value == PhaseEnum.Shooting).Count() > 0);
             Assert.Equal(name, stratagem.Name);
             Assert.Equal(description, stratagem.Description);
+            Assert.Equal(commandPoints, stratagem.CommandPoints);
         }
 
         /// <summary>
@@ -66,7 +70,8 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var phases = new List<Phase> { Phase.FromEnum(PhaseEnum.Movement), Phase.FromEnum(PhaseEnum.Charge) };
             var name = Name.FromString("Test Stratagem");
             var description = Description.FromString("These are the rules for the stratagem.");
-            return new StratagemAggregate(new CreateStratagemParams(id, phases, name, description));
+            var commandPoints = Amount.FromInt(2);
+            return new StratagemAggregate(new CreateStratagemParams(id, phases, name, description, commandPoints));
         }
     }
 }

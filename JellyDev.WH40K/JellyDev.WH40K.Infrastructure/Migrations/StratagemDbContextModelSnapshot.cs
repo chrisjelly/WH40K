@@ -24,6 +24,10 @@ namespace JellyDev.WH40K.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CommandPoints")
+                        .HasColumnType("int")
+                        .HasColumnName("CommandPoints");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 

@@ -47,9 +47,11 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
 
             var phases = new List<Phase>();
             command.Phases.ForEach(x => phases.Add(Phase.FromEnum(x)));
-            var name = Name.FromString(command.Name);
-            var description = Description.FromString(command.Description);
-            var updateStratagemParams = new UpdateStratagemParams(phases, name, description);
+
+            var updateStratagemParams = new UpdateStratagemParams(phases,
+                Name.FromString(command.Name),
+                Description.FromString(command.Description),
+                Amount.FromInt(command.CommandPoints));
 
             stratagem.Update(updateStratagemParams);
 

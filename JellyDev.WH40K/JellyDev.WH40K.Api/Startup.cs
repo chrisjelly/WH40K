@@ -1,8 +1,4 @@
-using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Infrastructure.Database.EfCore;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
-using JellyDev.WH40K.Infrastructure.Stratagem;
-using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,10 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
-using JellyDev.WH40K.Infrastructure.Stratagem.QueryServices;
-using System.Data.Common;
-using Microsoft.Data.SqlClient;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 
@@ -33,7 +25,8 @@ namespace JellyDev.WH40K.Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             string connectionString = Configuration.GetConnectionString("JellyDev");
-            builder.RegisterModule(new AutofacModule(connectionString));
+            builder.RegisterModule(new Api.AutofacModule(connectionString));
+            builder.RegisterModule(new Infrastructure.AutofacModule());
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
