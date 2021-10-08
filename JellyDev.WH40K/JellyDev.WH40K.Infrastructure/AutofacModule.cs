@@ -19,6 +19,8 @@ namespace JellyDev.WH40K.Infrastructure
                 .AsClosedTypesOf(typeof(IRepositoryCreator<,>));
             builder.RegisterAssemblyTypes(assembly)
                 .AsClosedTypesOf(typeof(IRepositoryUpdater<,>));
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IRepositoryDeleter<,>));
 
             // Register async command services
             builder.RegisterAssemblyTypes(assembly)

@@ -53,5 +53,11 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
         /// </summary>
         /// <param name="entity">The updated aggregate</param>
         public void Update(TAggregate entity) => _dbset.Update(entity);
+
+        /// <summary>
+        /// Delete an aggregate
+        /// </summary>
+        /// <param name="entity">The aggregate to delete</param>
+        public void Delete(TAggregate entity) => _dbset.Remove(entity);
     }
 }

@@ -20,14 +20,22 @@ namespace JellyDev.WH40K.Api.Commands
         private readonly IAsyncCommandService<UpdateStratagem> _updateStratagemSvc;
 
         /// <summary>
+        /// Delete Stratagem command service
+        /// </summary>
+        private readonly IAsyncCommandService<DeleteStratagem> _deleteStratagemSvc;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="createStratagemSvc">Create Stratagem command service</param>
         /// <param name="updateStratagemSvc">Update Stratagem command service</param>
-        public StratagemCommandApi(IAsyncCommandService<CreateStratagem> createStratagemSvc, IAsyncCommandService<UpdateStratagem> updateStratagemSvc)
+        /// <param name="deleteStratagemSvc">Delete Stratagem command service</param>
+        public StratagemCommandApi(IAsyncCommandService<CreateStratagem> createStratagemSvc, IAsyncCommandService<UpdateStratagem> updateStratagemSvc, 
+            IAsyncCommandService<DeleteStratagem> deleteStratagemSvc)
         {
             _createStratagemSvc = createStratagemSvc;
             _updateStratagemSvc = updateStratagemSvc;
+            _deleteStratagemSvc = deleteStratagemSvc;
         }
 
         /// <summary>
@@ -51,6 +59,18 @@ namespace JellyDev.WH40K.Api.Commands
         public async Task<IActionResult> PutAsync(UpdateStratagem updateStratagemCmd)
         {
             await _updateStratagemSvc.ExecuteAsync(updateStratagemCmd);
+            return new OkResult();
+        }
+
+        /// <summary>
+        /// Delete a stratagem
+        /// </summary>
+        /// <param name="deleteStratagemCmd">The command to delete the stratagem</param>
+        /// <returns>Task</returns>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(DeleteStratagem deleteStratagemCmd)
+        {
+            await _deleteStratagemSvc.ExecuteAsync(deleteStratagemCmd);
             return new OkResult();
         }
     }

@@ -7,9 +7,11 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel
     /// </summary>
     /// <typeparam name="TAggregate">Type of aggregate</typeparam>
     /// <typeparam name="TId">Type of aggregate ID</typeparam>
-    public interface IRepository<TAggregate, TId> : IRepositoryCreator<TAggregate, TId>, IRepositoryUpdater<TAggregate, TId>
-        where TAggregate : AggregateRoot<TId>
-        where TId : class
+    public interface IRepository<TAggregate, TId> : IRepositoryCreator<TAggregate, TId>, 
+        IRepositoryUpdater<TAggregate, TId>, 
+        IRepositoryDeleter<TAggregate, TId>
+            where TAggregate : AggregateRoot<TId>
+            where TId : class
     {
 
     }
