@@ -1,4 +1,5 @@
-﻿using JellyDev.WH40K.Infrastructure.SharedKernel;
+﻿using JellyDev.WH40K.Api.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace JellyDev.WH40K.Api.Queries
 {
     [Route("api/v1/stratagem")]
     [ApiController]
-    public class StratagemQueryApi : Controller
+    public class StratagemQueryApi : QueryApiBaseController
     {
         /// <summary>
         /// List Stratagems query service
@@ -30,10 +31,6 @@ namespace JellyDev.WH40K.Api.Queries
         /// <returns>A list of stratagems</returns>
         [HttpGet]
         [Route("list")]
-        public async Task<IActionResult> Get([FromQuery] Infrastructure.Stratagem.QueryModels.ListStratagems request)
-        {
-            IEnumerable<Infrastructure.Stratagem.ReadModels.Stratagem> results = await _listStratagemSvc.QueryAsync(request);
-            return new OkObjectResult(results);
-        }
+        public async Task<IActionResult> Get([FromQuery] Infrastructure.Stratagem.QueryModels.ListStratagems request) => await ExecuteQueryAsync(request, _listStratagemSvc.QueryAsync);
     }
 }
