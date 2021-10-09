@@ -35,6 +35,10 @@ namespace JellyDev.WH40K.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
+                    b.Property<Guid>("FactionId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("FactionId");
+
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
 

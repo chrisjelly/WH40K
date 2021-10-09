@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
 using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 
@@ -15,6 +16,8 @@ namespace JellyDev.WH40K.Infrastructure
                 .AsClosedTypesOf(typeof(IUnitOfWork<>));
 
             // Register repositories
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IRepositoryChecker<>));
             builder.RegisterAssemblyTypes(assembly)
                 .AsClosedTypesOf(typeof(IRepositoryCreator<,>));
             builder.RegisterAssemblyTypes(assembly)

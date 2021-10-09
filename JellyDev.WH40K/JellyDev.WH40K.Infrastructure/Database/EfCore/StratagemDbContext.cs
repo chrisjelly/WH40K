@@ -1,4 +1,5 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
+﻿using JellyDev.WH40K.Domain.Faction;
+using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Infrastructure.SharedKernel;
 using Microsoft.EntityFrameworkCore;
@@ -64,6 +65,13 @@ namespace JellyDev.WH40K.Infrastructure.Database.EfCore
                 });
 
                 // Setup columns
+                builder.Property(x => x.FactionId)
+                    .HasConversion(
+                        x => x.Value,
+                        x => new FactionId(x))
+                    .IsRequired()
+                    .HasColumnName("FactionId");
+
                 builder.Property(x => x.Name)
                     .HasConversion(
                         x => x.Value,

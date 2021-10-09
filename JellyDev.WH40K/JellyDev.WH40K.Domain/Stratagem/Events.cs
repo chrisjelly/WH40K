@@ -20,6 +20,11 @@ namespace JellyDev.WH40K.Domain.Stratagem
             public Guid Id { get; set; }
 
             /// <summary>
+            /// ID of the faction owning this stratagem
+            /// </summary>
+            public Guid FactionId { get; set; }
+
+            /// <summary>
             /// The phases relevant to this stratagem
             /// </summary>
             public ICollection<Phase> Phases { get; set; }
@@ -49,6 +54,11 @@ namespace JellyDev.WH40K.Domain.Stratagem
             /// ID
             /// </summary>
             public Guid Id { get; set; }
+
+            /// <summary>
+            /// ID of the faction owning this stratagem
+            /// </summary>
+            public Guid FactionId { get; set; }
 
             /// <summary>
             /// The phases relevant to this stratagem

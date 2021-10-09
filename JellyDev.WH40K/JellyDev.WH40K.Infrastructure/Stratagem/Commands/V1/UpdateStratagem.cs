@@ -15,6 +15,11 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1
         public Guid Id { get; set; }
 
         /// <summary>
+        /// ID of the faction owning this stratagem
+        /// </summary>
+        public Guid FactionId { get; set; }
+
+        /// <summary>
         /// The phases relevant to the stratagem
         /// </summary>
         public ICollection<PhaseEnum> Phases { get; set; }

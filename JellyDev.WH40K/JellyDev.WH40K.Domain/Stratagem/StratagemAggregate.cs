@@ -1,4 +1,6 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel;
+﻿using JellyDev.WH40K.Domain.Faction;
+using JellyDev.WH40K.Domain.SharedKernel;
+using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
 using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using System;
@@ -16,6 +18,11 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// Protected constructor
         /// </summary>
         protected StratagemAggregate() { }
+
+        /// <summary>
+        /// ID of the faction owning this stratagem
+        /// </summary>
+        public FactionId FactionId { get; private set; }
 
         /// <summary>
         /// The phases relevant to this stratagem
@@ -41,13 +48,18 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// Constructor
         /// </summary>
         /// <param name="createStratagemParams">Parameter object for creating a stratagem</param>
-        public StratagemAggregate(CreateStratagemParams createStratagemParams)
+        /// <param name="factionChecker">Faction checker for confirming factions exist</param>
+        public StratagemAggregate(CreateStratagemParams createStratagemParams, IRepositoryChecker<FactionId> factionChecker)
         {
             if (createStratagemParams == null) throw new ArgumentNullException(nameof(createStratagemParams));
+            if (factionChecker == null) throw new ArgumentNullException(nameof(factionChecker));
+
+            if (factionChecker.Exists(createStratagemParams.FactionId) == false) throw new Exception($"Unable to find faction with id {createStratagemParams.FactionId}");
 
             Apply(new Events.StratagemCreated
             {
                 Id = createStratagemParams.Id,
+                FactionId = createStratagemParams.FactionId,
                 Phases = createStratagemParams.Phases,
                 Name = createStratagemParams.Name,
                 Description = createStratagemParams.Description,
@@ -59,13 +71,18 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// Update the stratagem
         /// </summary>
         /// <param name="updateStratagemParams">Parameter object for updating a stratagem</param>
-        public void Update(UpdateStratagemParams updateStratagemParams)
+        /// <param name="factionChecker">Faction checker for confirming factions exist</param>
+        public void Update(UpdateStratagemParams updateStratagemParams, IRepositoryChecker<FactionId> factionChecker)
         {
             if (updateStratagemParams == null) throw new ArgumentNullException(nameof(updateStratagemParams));
+            if (factionChecker == null) throw new ArgumentNullException(nameof(factionChecker));
+
+            if (factionChecker.Exists(updateStratagemParams.FactionId) == false) throw new Exception($"Unable to find faction with id {updateStratagemParams.FactionId}");
 
             Apply(new Events.StratagemUpdated
             {
                 Id = Id,
+                FactionId = updateStratagemParams.FactionId,
                 Phases = updateStratagemParams.Phases,
                 Name = updateStratagemParams.Name,
                 Description = updateStratagemParams.Description,
@@ -91,6 +108,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
         {
             bool valid =
                 Id != null &&
+                FactionId != null &&
                 Phases != null &&
                 string.IsNullOrEmpty(Name) == false &&
                 string.IsNullOrEmpty(Description) == false &&
@@ -123,6 +141,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
         private void HandleStratagemCreated(Events.StratagemCreated e)
         {
             Id = new StratagemId(e.Id);
+            FactionId = new FactionId(e.FactionId);
             Phases = e.Phases;
             Name = Name.FromString(e.Name);
             Description = Description.FromString(e.Description);
@@ -135,6 +154,7 @@ namespace JellyDev.WH40K.Domain.Stratagem
         /// <param name="e">Stratagem Updated event</param>
         private void HandleStratagemUpdated(Events.StratagemUpdated e)
         {
+            FactionId = new FactionId(e.FactionId);
             Phases = e.Phases;
             Name = Name.FromString(e.Name);
             Description = Description.FromString(e.Description);

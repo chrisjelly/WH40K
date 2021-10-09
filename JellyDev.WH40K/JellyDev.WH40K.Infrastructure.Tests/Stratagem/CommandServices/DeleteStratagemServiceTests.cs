@@ -1,4 +1,6 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
+﻿using JellyDev.WH40K.Domain.Faction;
+using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
+using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using JellyDev.WH40K.Infrastructure.Database.EfCore;
@@ -37,16 +39,23 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
         public async Task DeleteStratagemService_can_execute_successfully()
         {
             // Arrange
+            var factionId = new FactionId(Guid.NewGuid());
             var phases = new List<Phase> { Phase.FromEnum(PhaseEnum.Shooting) };
             var name = Name.FromString("Test");
             var description = Description.FromString("This is a test stratagem.");
             var commandPoints = Amount.FromInt(2);
             var createStratagemParams = new CreateStratagemParams(new StratagemId(Guid.NewGuid()),
+                       factionId,
                        phases,
                        name,
                        description,
                        commandPoints);
-            var stratagem = new StratagemAggregate(createStratagemParams);
+
+            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
+            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+                .Returns(true);
+
+            var stratagem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);
 
             var repositoryDeleter = new Mock<IRepositoryDeleter<StratagemAggregate, StratagemId>>();
             repositoryDeleter.Setup(x => x.Load(new StratagemId(createStratagemParams.Id)))

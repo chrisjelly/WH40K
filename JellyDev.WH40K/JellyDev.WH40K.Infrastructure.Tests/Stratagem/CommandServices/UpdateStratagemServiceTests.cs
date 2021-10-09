@@ -1,4 +1,6 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
+﻿using JellyDev.WH40K.Domain.Faction;
+using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
+using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using JellyDev.WH40K.Infrastructure.Database.EfCore;
@@ -21,13 +23,19 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
             // Arrange
             var command = new UpdateStratagem
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                FactionId = Guid.NewGuid()
             };
+            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
+            repositoryChecker.Setup(x => x.Exists(new FactionId(command.FactionId)))
+                .Returns(true);
+
             var repositoryUpdater = new Mock<IRepositoryUpdater<StratagemAggregate, StratagemId>>();
             repositoryUpdater.Setup(x => x.Load(new StratagemId(command.Id)))
                 .Returns((StratagemAggregate)null);
+
             var unitOfWork = new Mock<IUnitOfWork<StratagemDbContext>>();
-            var commandSvc = new UpdateStratagemService(repositoryUpdater.Object, unitOfWork.Object);
+            var commandSvc = new UpdateStratagemService(repositoryUpdater.Object, unitOfWork.Object, repositoryChecker.Object);
 
             // Assert
             Assert.ThrowsAsync<InvalidOperationException>(() => commandSvc.ExecuteAsync(command));
@@ -37,16 +45,23 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
         public async Task UpdateStratagemService_can_execute_successfully()
         {
             // Arrange
+            var factionId = new FactionId(Guid.NewGuid());
             var phases = new List<Phase> { Phase.FromEnum(PhaseEnum.Shooting) };
             var name = Name.FromString("Test");
             var description = Description.FromString("This is a test stratagem.");
             var commandPoints = Amount.FromInt(2);
             var createStratagemParams = new CreateStratagemParams(new StratagemId(Guid.NewGuid()),
-                       phases,
-                       name,
-                       description,
-                       commandPoints);
-            var stratagem = new StratagemAggregate(createStratagemParams);
+                factionId,
+                phases,
+                name,
+                description,
+                commandPoints);
+
+            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
+            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+                .Returns(true);
+
+            var stratagem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);
 
             var repositoryUpdater = new Mock<IRepositoryUpdater<StratagemAggregate, StratagemId>>();
             repositoryUpdater.Setup(x => x.Load(createStratagemParams.Id))
@@ -56,11 +71,12 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
             var command = new UpdateStratagem
             {
                 Id = createStratagemParams.Id,
+                FactionId = factionId,
                 Phases = new List<PhaseEnum> { PhaseEnum.Command, PhaseEnum.Movement },
                 Name = "Test Update",
                 Description = "This is an update."
             };
-            var commandSvc = new UpdateStratagemService(repositoryUpdater.Object, unitOfWork.Object);
+            var commandSvc = new UpdateStratagemService(repositoryUpdater.Object, unitOfWork.Object, repositoryChecker.Object);
 
             // Act
             await commandSvc.ExecuteAsync(command);

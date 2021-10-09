@@ -1,4 +1,5 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel;
+using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
 using System.Threading.Tasks;
 
 namespace JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces

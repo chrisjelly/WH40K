@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JellyDev.WH40K.Infrastructure.Migrations
 {
     [DbContext(typeof(StratagemDbContext))]
-    [Migration("20211009035020_Initial")]
+    [Migration("20211009051430_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,10 @@ namespace JellyDev.WH40K.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
+
+                    b.Property<Guid>("FactionId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("FactionId");
 
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");

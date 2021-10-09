@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JellyDev.WH40K.Domain.SharedKernel

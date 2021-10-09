@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MoreLinq;
 using JellyDev.WH40K.Infrastructure.Database.EfCore;
+using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
+using JellyDev.WH40K.Domain.Faction;
 
 namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
 {
@@ -27,14 +29,21 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
         private readonly IUnitOfWork<StratagemDbContext> _unitOfWork;
 
         /// <summary>
+        /// Faction checker for confirming factions exist
+        /// </summary>
+        private readonly IRepositoryChecker<FactionId> _factionChecker;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="repositoryUpdater">Stratagem repository updater</param>
         /// <param name="unitOfWork">Stratagem unit of work</param>
-        public UpdateStratagemService(IRepositoryUpdater<StratagemAggregate, StratagemId> repositoryUpdater, IUnitOfWork<StratagemDbContext> unitOfWork)
+        /// <param name="factionChecker">Faction checker for confirming factions exist</param>
+        public UpdateStratagemService(IRepositoryUpdater<StratagemAggregate, StratagemId> repositoryUpdater, IUnitOfWork<StratagemDbContext> unitOfWork, IRepositoryChecker<FactionId> factionChecker)
         {
             _repositoryUpdater = repositoryUpdater;
             _unitOfWork = unitOfWork;
+            _factionChecker = factionChecker;
         }
 
         /// <summary>
@@ -49,12 +58,13 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
             var phases = new List<Phase>();
             command.Phases.ForEach(x => phases.Add(Phase.FromEnum(x)));
 
-            var updateStratagemParams = new UpdateStratagemParams(phases,
+            var updateStratagemParams = new UpdateStratagemParams(new FactionId(command.FactionId),
+                phases,
                 Name.FromString(command.Name),
                 Description.FromString(command.Description),
                 Amount.FromInt(command.CommandPoints));
 
-            stratagem.Update(updateStratagemParams);
+            stratagem.Update(updateStratagemParams, _factionChecker);
 
             _repositoryUpdater.Update(stratagem);
             await _unitOfWork.CommitAsync();

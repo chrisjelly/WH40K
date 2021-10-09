@@ -1,6 +1,6 @@
 ﻿
 
-namespace JellyDev.WH40K.Domain.SharedKernel
+namespace JellyDev.WH40K.Domain.SharedKernel.Interfaces
 {
     /// <summary>
     /// Domain event handler interface

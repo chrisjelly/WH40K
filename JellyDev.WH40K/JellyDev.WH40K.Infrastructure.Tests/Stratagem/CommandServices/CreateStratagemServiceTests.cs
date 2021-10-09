@@ -1,3 +1,5 @@
+using JellyDev.WH40K.Domain.Faction;
+using JellyDev.WH40K.Domain.SharedKernel.Interfaces;
 using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Infrastructure.Database.EfCore;
@@ -20,13 +22,19 @@ namespace JellyDev.WH40K.Infrastructure.Tests.CommandServices
             // Arrange
             var command = new CreateStratagem
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                FactionId = Guid.NewGuid()
             };
             var repositoryCreator = new Mock<IRepositoryCreator<StratagemAggregate, StratagemId>>();
             repositoryCreator.Setup(x => x.Exists(new StratagemId(command.Id)))
                 .Returns(true);
             var unitOfWork = new Mock<IUnitOfWork<StratagemDbContext>>();
-            var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
+
+            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
+            repositoryChecker.Setup(x => x.Exists(new FactionId(command.FactionId)))
+                .Returns(true);
+
+            var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object, repositoryChecker.Object);
 
             // Assert
             Assert.ThrowsAsync<InvalidOperationException>(() => commandSvc.ExecuteAsync(command));
@@ -39,6 +47,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.CommandServices
             var command = new CreateStratagem
             {
                 Id = Guid.NewGuid(),
+                FactionId = Guid.NewGuid(),
                 Phases = new List<PhaseEnum> { PhaseEnum.Charge },
                 Name = "Test",
                 Description = "This is a test stratagem.",
@@ -48,7 +57,12 @@ namespace JellyDev.WH40K.Infrastructure.Tests.CommandServices
             repositoryCreator.Setup(x => x.Exists(new StratagemId(command.Id)))
                 .Returns(false);
             var unitOfWork = new Mock<IUnitOfWork<StratagemDbContext>>();
-            var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
+
+            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
+            repositoryChecker.Setup(x => x.Exists(new FactionId(command.FactionId)))
+                .Returns(true);
+
+            var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object, repositoryChecker.Object);
 
             // Act
             await commandSvc.ExecuteAsync(command);
