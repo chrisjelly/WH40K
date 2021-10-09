@@ -3,7 +3,6 @@ using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using static JellyDev.WH40K.Domain.SharedKernel.Exceptions;
 
 namespace JellyDev.WH40K.Domain.Stratagem
