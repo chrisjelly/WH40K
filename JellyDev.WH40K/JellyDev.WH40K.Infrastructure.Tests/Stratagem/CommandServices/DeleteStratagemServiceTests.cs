@@ -7,8 +7,6 @@ using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -33,7 +31,6 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
             // Assert
             Assert.ThrowsAsync<InvalidOperationException>(() => commandSvc.ExecuteAsync(command));
         }
-
 
         [Fact]
         public async Task DeleteStratagemService_can_execute_successfully()

@@ -4,16 +4,13 @@ using JellyDev.WH40K.Infrastructure.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace JellyDev.WH40K.Infrastructure.Database.EfCore
 {
     /// <summary>
     /// Database context for the Stratagem aggregate
     /// </summary>
-    public class StratagemDbContext : DbContext
+    public class StratagemDbContext : BaseDbContext<StratagemDbContext>
     {
         /// <summary>
         /// Constructor
@@ -89,35 +86,6 @@ namespace JellyDev.WH40K.Infrastructure.Database.EfCore
                 builder.Property<DateTime>("Created");
                 builder.Property<DateTime?>("LastUpdated");
             }
-        }
-
-        /// <summary>
-        /// Save changes override
-        /// </summary>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Task</returns>
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            ChangeTracker.DetectChanges();
-
-            foreach (var entry in ChangeTracker.Entries())
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    if (entry.Metadata.FindProperty("Created") != null)
-                    {
-                        entry.Property("Created").CurrentValue = DateTime.UtcNow;
-                    }
-                }
-                if (entry.State == EntityState.Modified)
-                {
-                    if (entry.Metadata.FindProperty("LastUpdated") != null)
-                    {
-                        entry.Property("LastUpdated").CurrentValue = DateTime.UtcNow;
-                    }
-                }
-            }
-            return await base.SaveChangesAsync();
         }
     }
 }

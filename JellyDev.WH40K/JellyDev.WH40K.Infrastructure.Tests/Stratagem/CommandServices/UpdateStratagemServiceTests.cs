@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+
 namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
 {
     public class UpdateStratagemServiceTests

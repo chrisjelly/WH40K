@@ -44,6 +44,10 @@ namespace JellyDev.WH40K.Api
             {
                 opt.UseSqlServer(connectionString);
             });
+            services.AddDbContextPool<FactionDbContext>((sp, opt) =>
+            {
+                opt.UseSqlServer(connectionString);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
