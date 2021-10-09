@@ -3,6 +3,7 @@ using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using System;
 using System.Threading.Tasks;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 
 namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
 {
@@ -19,14 +20,14 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
         /// <summary>
         /// Stratagem unit of work
         /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork<StratagemDbContext> _unitOfWork;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="repositoryDeleter">Stratagem repository deleter</param>
         /// <param name="unitOfWork">Stratagem unit of work</param>
-        public DeleteStratagemService(IRepositoryDeleter<StratagemAggregate, StratagemId> repositoryDeleter, IUnitOfWork unitOfWork)
+        public DeleteStratagemService(IRepositoryDeleter<StratagemAggregate, StratagemId> repositoryDeleter, IUnitOfWork<StratagemDbContext> unitOfWork)
         {
             _repositoryDeleter = repositoryDeleter;
             _unitOfWork = unitOfWork;

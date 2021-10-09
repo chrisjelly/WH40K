@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 
 namespace JellyDev.WH40K.Infrastructure.Tests.Faction
 {
@@ -27,7 +28,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Faction
             var repositoryDeleter = new Mock<IRepositoryDeleter<FactionAggregate, FactionId>>();
             repositoryDeleter.Setup(x => x.Load(new FactionId(command.Id)))
                 .Returns((FactionAggregate)null);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<FactionDbContext>>();
             var commandSvc = new DeleteFactionService(repositoryDeleter.Object, unitOfWork.Object);
 
             // Assert
@@ -45,7 +46,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Faction
             var repositoryDeleter = new Mock<IRepositoryDeleter<FactionAggregate, FactionId>>();
             repositoryDeleter.Setup(x => x.Load(new FactionId(createFactionParams.Id)))
                 .Returns(faction);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<FactionDbContext>>();
 
             var command = new DeleteFaction
             {

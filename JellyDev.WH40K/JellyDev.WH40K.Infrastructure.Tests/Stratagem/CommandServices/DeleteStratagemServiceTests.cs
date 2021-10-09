@@ -1,6 +1,7 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
@@ -25,7 +26,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
             var repositoryDeleter = new Mock<IRepositoryDeleter<StratagemAggregate, StratagemId>>();
             repositoryDeleter.Setup(x => x.Load(new StratagemId(command.Id)))
                 .Returns((StratagemAggregate)null);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<StratagemDbContext>>();
             var commandSvc = new DeleteStratagemService(repositoryDeleter.Object, unitOfWork.Object);
 
             // Assert
@@ -50,7 +51,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Stratagem.CommandServices
             var repositoryDeleter = new Mock<IRepositoryDeleter<StratagemAggregate, StratagemId>>();
             repositoryDeleter.Setup(x => x.Load(new StratagemId(createStratagemParams.Id)))
                 .Returns(stratagem);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<StratagemDbContext>>();
 
             var command = new DeleteStratagem
             {

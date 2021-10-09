@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MoreLinq;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 
 namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
 {
@@ -23,14 +24,14 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem.CommandServices
         /// <summary>
         /// Stratagem unit of work
         /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork<StratagemDbContext> _unitOfWork;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="repositoryUpdater">Stratagem repository updater</param>
         /// <param name="unitOfWork">Stratagem unit of work</param>
-        public UpdateStratagemService(IRepositoryUpdater<StratagemAggregate, StratagemId> repositoryUpdater, IUnitOfWork unitOfWork)
+        public UpdateStratagemService(IRepositoryUpdater<StratagemAggregate, StratagemId> repositoryUpdater, IUnitOfWork<StratagemDbContext> unitOfWork)
         {
             _repositoryUpdater = repositoryUpdater;
             _unitOfWork = unitOfWork;

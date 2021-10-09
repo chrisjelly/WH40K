@@ -21,7 +21,7 @@ namespace JellyDev.WH40K.Infrastructure.Faction
             this DbConnection connection,
             QueryModels.ListFactions query)
             => connection.QueryAsync<ReadModels.Faction>(
-                "SELECT s.\"Id\", s.\"Name\" " +
+                "SELECT f.\"Id\", f.\"Name\" " +
                 "FROM WH.\"Factions\" f " +
                 "ORDER BY f.\"Id\" " +
                 "OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY",

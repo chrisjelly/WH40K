@@ -10,9 +10,9 @@ namespace JellyDev.WH40K.Infrastructure
         {
             System.Reflection.Assembly assembly = typeof(CreateStratagem).Assembly;
 
-            // Register unit of work
+            // Register units of work
             builder.RegisterAssemblyTypes(assembly)
-                .As<IUnitOfWork>();
+                .AsClosedTypesOf(typeof(IUnitOfWork<>));
 
             // Register repositories
             builder.RegisterAssemblyTypes(assembly)

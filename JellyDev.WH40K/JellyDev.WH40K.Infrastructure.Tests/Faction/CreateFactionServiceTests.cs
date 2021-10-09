@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 
 namespace JellyDev.WH40K.Infrastructure.Tests.Faction
 {
@@ -22,7 +23,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Faction
             var repositoryCreator = new Mock<IRepositoryCreator<FactionAggregate, FactionId>>();
             repositoryCreator.Setup(x => x.Exists(new FactionId(command.Id)))
                 .Returns(true);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<FactionDbContext>>();
             var commandSvc = new CreateFactionService(repositoryCreator.Object, unitOfWork.Object);
 
             // Assert
@@ -41,7 +42,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Faction
             var repositoryCreator = new Mock<IRepositoryCreator<FactionAggregate, FactionId>>();
             repositoryCreator.Setup(x => x.Exists(new FactionId(command.Id)))
                 .Returns(false);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<FactionDbContext>>();
             var commandSvc = new CreateFactionService(repositoryCreator.Object, unitOfWork.Object);
 
             // Act

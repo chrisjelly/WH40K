@@ -5,6 +5,7 @@ using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using System;
 using System.Threading.Tasks;
 using JellyDev.WH40K.Infrastructure.Faction.Commands.V1;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 
 namespace JellyDev.WH40K.Infrastructure.Faction.CommandServices
 {
@@ -21,14 +22,14 @@ namespace JellyDev.WH40K.Infrastructure.Faction.CommandServices
         /// <summary>
         /// Faction unit of work
         /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork<FactionDbContext> _unitOfWork;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="repositoryCreator">Faction repository creator</param>
         /// <param name="unitOfWork">Faction unit of work</param>
-        public CreateFactionService(IRepositoryCreator<FactionAggregate, FactionId> repositoryCreator, IUnitOfWork unitOfWork)
+        public CreateFactionService(IRepositoryCreator<FactionAggregate, FactionId> repositoryCreator, IUnitOfWork<FactionDbContext> unitOfWork)
         {
             _repositoryCreator = repositoryCreator;
             _unitOfWork = unitOfWork;

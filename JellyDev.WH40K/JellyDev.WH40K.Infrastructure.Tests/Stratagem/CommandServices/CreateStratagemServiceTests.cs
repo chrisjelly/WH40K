@@ -1,5 +1,6 @@
 using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
@@ -24,7 +25,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.CommandServices
             var repositoryCreator = new Mock<IRepositoryCreator<StratagemAggregate, StratagemId>>();
             repositoryCreator.Setup(x => x.Exists(new StratagemId(command.Id)))
                 .Returns(true);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<StratagemDbContext>>();
             var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
 
             // Assert
@@ -46,7 +47,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.CommandServices
             var repositoryCreator = new Mock<IRepositoryCreator<StratagemAggregate, StratagemId>>();
             repositoryCreator.Setup(x => x.Exists(new StratagemId(command.Id)))
                 .Returns(false);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<StratagemDbContext>>();
             var commandSvc = new CreateStratagemService(repositoryCreator.Object, unitOfWork.Object);
 
             // Act

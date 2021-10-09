@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 
 namespace JellyDev.WH40K.Infrastructure.Tests.Faction
 {
@@ -25,7 +26,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Faction
             var repositoryUpdater = new Mock<IRepositoryUpdater<FactionAggregate, FactionId>>();
             repositoryUpdater.Setup(x => x.Load(new FactionId(command.Id)))
                 .Returns((FactionAggregate)null);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<FactionDbContext>>();
             var commandSvc = new UpdateFactionService(repositoryUpdater.Object, unitOfWork.Object);
 
             // Assert
@@ -43,7 +44,7 @@ namespace JellyDev.WH40K.Infrastructure.Tests.Faction
             var repositoryUpdater = new Mock<IRepositoryUpdater<FactionAggregate, FactionId>>();
             repositoryUpdater.Setup(x => x.Load(createFactionParams.Id))
                 .Returns(faction);
-            var unitOfWork = new Mock<IUnitOfWork>();
+            var unitOfWork = new Mock<IUnitOfWork<FactionDbContext>>();
 
             var command = new UpdateFaction
             {

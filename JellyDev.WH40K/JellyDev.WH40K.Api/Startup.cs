@@ -51,7 +51,7 @@ namespace JellyDev.WH40K.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, StratagemDbContext stratagemDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, StratagemDbContext stratagemDbContext, FactionDbContext factionDbContext)
         {
             AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
@@ -74,6 +74,7 @@ namespace JellyDev.WH40K.Api
             });
 
             stratagemDbContext.Database.Migrate();
+            factionDbContext.Database.Migrate();
         }
     }
 }

@@ -1,11 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces
 {
     /// <summary>
     /// Unit of work interface
     /// </summary>
-    public interface IUnitOfWork
+    /// <typeparam name="TDbContext">Type of database context</typeparam>
+    public interface IUnitOfWork<TDbContext>
+        where TDbContext : DbContext
     {
         /// <summary>
         /// Commit the unit of work

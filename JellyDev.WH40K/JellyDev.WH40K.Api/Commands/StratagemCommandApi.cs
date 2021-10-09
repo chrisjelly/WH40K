@@ -47,7 +47,6 @@ namespace JellyDev.WH40K.Api.Commands
         [HttpPost]
         public async Task<IActionResult> PostAsync(CreateStratagem createStratagemCmd) => await ExecuteCommandAsync(createStratagemCmd, _createStratagemSvc.ExecuteAsync);
 
-
         /// <summary>
         /// Update a stratagem
         /// </summary>

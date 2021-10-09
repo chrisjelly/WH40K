@@ -1,10 +1,9 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
-using JellyDev.WH40K.Domain.Faction;
-using JellyDev.WH40K.Domain.Faction.ParameterObjects;
+﻿using JellyDev.WH40K.Domain.Faction;
 using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using System;
 using System.Threading.Tasks;
 using JellyDev.WH40K.Infrastructure.Faction.Commands.V1;
+using JellyDev.WH40K.Infrastructure.Database.EfCore;
 
 namespace JellyDev.WH40K.Infrastructure.Faction.CommandServices
 {
@@ -21,14 +20,14 @@ namespace JellyDev.WH40K.Infrastructure.Faction.CommandServices
         /// <summary>
         /// Faction unit of work
         /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork<FactionDbContext> _unitOfWork;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="repositoryDeleter">Faction repository deleter</param>
         /// <param name="unitOfWork">Stratagem unit of work</param>
-        public DeleteFactionService(IRepositoryDeleter<FactionAggregate, FactionId> repositoryDeleter, IUnitOfWork unitOfWork)
+        public DeleteFactionService(IRepositoryDeleter<FactionAggregate, FactionId> repositoryDeleter, IUnitOfWork<FactionDbContext> unitOfWork)
         {
             _repositoryDeleter = repositoryDeleter;
             _unitOfWork = unitOfWork;
