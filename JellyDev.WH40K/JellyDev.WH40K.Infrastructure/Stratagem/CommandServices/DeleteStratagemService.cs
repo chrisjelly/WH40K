@@ -1,5 +1,5 @@
 ﻿using JellyDev.WH40K.Domain.Stratagem;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using System;
 using System.Threading.Tasks;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;

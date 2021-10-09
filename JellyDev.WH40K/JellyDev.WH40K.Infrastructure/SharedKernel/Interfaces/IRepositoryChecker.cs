@@ -1,6 +1,6 @@
 ﻿
 
-namespace JellyDev.WH40K.Infrastructure.SharedKernel
+namespace JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces
 {
     /// <summary>
     /// Interface for a repository checker to check if a record exists

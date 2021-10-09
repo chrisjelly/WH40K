@@ -1,10 +1,10 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 using System.Linq;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 
 namespace JellyDev.WH40K.Infrastructure.Stratagem.QueryServices
 {

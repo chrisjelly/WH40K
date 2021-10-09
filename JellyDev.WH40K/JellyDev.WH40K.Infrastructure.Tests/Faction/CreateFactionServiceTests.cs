@@ -1,13 +1,11 @@
-﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
-using JellyDev.WH40K.Domain.Faction;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
+﻿using JellyDev.WH40K.Domain.Faction;
 using JellyDev.WH40K.Infrastructure.Faction.Commands.V1;
 using JellyDev.WH40K.Infrastructure.Faction.CommandServices;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 
 namespace JellyDev.WH40K.Infrastructure.Tests.Faction
 {

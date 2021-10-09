@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace JellyDev.WH40K.Infrastructure.SharedKernel
+namespace JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces
 {
     /// <summary>
     /// Unit of work interface

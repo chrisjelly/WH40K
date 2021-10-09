@@ -1,6 +1,6 @@
 using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 using JellyDev.WH40K.Infrastructure.Stratagem.CommandServices;
 using Moq;

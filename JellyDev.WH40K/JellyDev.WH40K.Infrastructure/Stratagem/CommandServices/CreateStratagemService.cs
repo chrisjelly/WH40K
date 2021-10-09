@@ -1,7 +1,7 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Stratagem;
 using JellyDev.WH40K.Domain.Stratagem.ParameterObjects;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

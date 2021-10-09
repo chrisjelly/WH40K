@@ -1,4 +1,5 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;

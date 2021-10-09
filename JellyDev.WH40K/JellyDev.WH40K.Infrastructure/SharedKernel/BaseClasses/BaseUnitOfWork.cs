@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace JellyDev.WH40K.Infrastructure.SharedKernel

@@ -1,7 +1,6 @@
 ﻿using JellyDev.WH40K.Api.SharedKernel;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace JellyDev.WH40K.Api.Queries

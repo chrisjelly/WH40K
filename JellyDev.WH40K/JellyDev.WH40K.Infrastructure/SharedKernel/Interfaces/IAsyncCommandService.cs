@@ -1,17 +1,17 @@
-﻿
+﻿using System.Threading.Tasks;
 
-namespace JellyDev.WH40K.Infrastructure.SharedKernel
+namespace JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces
 {
     /// <summary>
-    /// Generic command service interface
+    /// Generic asynchronous command service interface
     /// </summary>
     /// <typeparam name="TCommand">Type of command to execute</typeparam>
-    public interface ICommandService<TCommand>
+    public interface IAsyncCommandService<TCommand>
     {
         /// <summary>
         /// Execute the command
         /// </summary>
         /// <param name="command">The command to execute</param>
-        void Execute(TCommand command);
+        Task ExecuteAsync(TCommand command);
     }
 }

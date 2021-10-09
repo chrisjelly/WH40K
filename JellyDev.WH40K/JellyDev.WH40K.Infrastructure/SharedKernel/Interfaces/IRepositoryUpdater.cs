@@ -1,6 +1,6 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel;
 
-namespace JellyDev.WH40K.Infrastructure.SharedKernel
+namespace JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces
 {
     /// <summary>
     /// Interface for updating aggregates in a repository

@@ -1,7 +1,7 @@
 ﻿using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using JellyDev.WH40K.Domain.Faction;
 using JellyDev.WH40K.Domain.Faction.ParameterObjects;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using JellyDev.WH40K.Infrastructure.Faction.Commands.V1;
 using JellyDev.WH40K.Infrastructure.Faction.CommandServices;
 using Moq;

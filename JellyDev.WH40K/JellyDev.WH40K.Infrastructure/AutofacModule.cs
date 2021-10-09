@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using JellyDev.WH40K.Infrastructure.SharedKernel;
+using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
 using JellyDev.WH40K.Infrastructure.Stratagem.Commands.V1;
 
 namespace JellyDev.WH40K.Infrastructure
