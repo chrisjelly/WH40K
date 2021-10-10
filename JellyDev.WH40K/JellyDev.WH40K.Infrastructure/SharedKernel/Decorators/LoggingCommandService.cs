@@ -1,4 +1,6 @@
 ﻿using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
 {
@@ -13,12 +15,19 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         private readonly ICommandService<TCommand> _decoratee;
 
         /// <summary>
+        /// Logger
+        /// </summary>
+        private readonly ILogger<LoggingCommandService<TCommand>> _logger;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="decoratee">The decorated Command Service</param>
-        public LoggingCommandService(ICommandService<TCommand> decoratee)
+        /// <param name="logger">Logger</param>
+        public LoggingCommandService(ICommandService<TCommand> decoratee, ILogger<LoggingCommandService<TCommand>> logger)
         {
             _decoratee = decoratee;
+            _logger = logger;
         }
 
         /// <summary>
@@ -28,7 +37,8 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         public void Execute(TCommand command)
         {
             _decoratee.Execute(command);
-            // TODO: Log something here
+            string serializedCommand = JsonConvert.SerializeObject(command);
+            _logger.LogInformation($"Executed command: {serializedCommand}");
         }
     }
 }

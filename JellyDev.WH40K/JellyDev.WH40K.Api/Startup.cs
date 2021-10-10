@@ -8,6 +8,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
+using Serilog.Events;
 
 namespace JellyDev.WH40K.Api
 {
@@ -24,8 +27,8 @@ namespace JellyDev.WH40K.Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            string connectionString = Configuration.GetConnectionString("JellyDev");
-            builder.RegisterModule(new Api.AutofacModule(connectionString));
+            string connectionStringRead = Configuration.GetConnectionString("JellyDevRead");
+            builder.RegisterModule(new Api.AutofacModule(connectionStringRead));
             builder.RegisterModule(new Infrastructure.AutofacModule());
         }
 
@@ -39,15 +42,33 @@ namespace JellyDev.WH40K.Api
             });
 
             // Database
-            string connectionString = Configuration.GetConnectionString("JellyDev");
+            string connectionStringWrite = Configuration.GetConnectionString("JellyDevWrite");
             services.AddDbContextPool<StratagemDbContext>((sp, opt) =>
             {
-                opt.UseSqlServer(connectionString);
+                opt.UseSqlServer(connectionStringWrite);
             });
             services.AddDbContextPool<FactionDbContext>((sp, opt) =>
             {
-                opt.UseSqlServer(connectionString);
+                opt.UseSqlServer(connectionStringWrite);
             });
+
+            // Logger
+            var sinkOpts = new MSSqlServerSinkOptions();
+            sinkOpts.TableName = "Logs";
+            sinkOpts.AutoCreateSqlTable = true;
+            var columnOpts = new ColumnOptions();
+            columnOpts.Store.Remove(StandardColumn.Properties);
+            columnOpts.Store.Add(StandardColumn.LogEvent);
+            columnOpts.LogEvent.DataLength = 2048;
+            columnOpts.TimeStamp.NonClusteredIndex = true;
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo
+                .MSSqlServer(
+                    connectionString: connectionStringWrite,
+                    sinkOptions: sinkOpts,
+                    columnOptions: columnOpts)
+                .CreateLogger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

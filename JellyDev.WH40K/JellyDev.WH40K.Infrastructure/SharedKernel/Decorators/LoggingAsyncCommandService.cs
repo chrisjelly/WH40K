@@ -1,4 +1,6 @@
 ﻿using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
@@ -14,12 +16,19 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         private readonly IAsyncCommandService<TCommand> _decoratee;
 
         /// <summary>
+        /// Logger
+        /// </summary>
+        private readonly ILogger<LoggingAsyncCommandService<TCommand>> _logger;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="decoratee">The decorated Async Command Service</param>
-        public LoggingAsyncCommandService(IAsyncCommandService<TCommand> decoratee)
+        /// <param name="logger">Logger</param>
+        public LoggingAsyncCommandService(IAsyncCommandService<TCommand> decoratee, ILogger<LoggingAsyncCommandService<TCommand>> logger)
         {
             _decoratee = decoratee;
+            _logger = logger;
         }
 
         /// <summary>
@@ -29,7 +38,8 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         public async Task ExecuteAsync(TCommand command)
         {            
             await _decoratee.ExecuteAsync(command);
-            // TODO: Log something here
+            string serializedCommand = JsonConvert.SerializeObject(command);
+            _logger.LogInformation($"Executed async command: {serializedCommand}");
         }
     }
 }
