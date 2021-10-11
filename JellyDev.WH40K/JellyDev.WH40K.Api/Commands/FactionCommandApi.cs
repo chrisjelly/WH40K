@@ -43,7 +43,7 @@ namespace JellyDev.WH40K.Api.Commands
         /// Create a faction
         /// </summary>
         /// <param name="createFactionCmd">The command to create the faction</param>
-        /// <returns>Task</returns>
+        /// <returns>API command result</returns>
         [HttpPost]
         public async Task<IActionResult> PostAsync(CreateFaction createFactionCmd) => await ExecuteCommandAsync(createFactionCmd, _createFactionSvc.ExecuteAsync);
 
@@ -51,7 +51,7 @@ namespace JellyDev.WH40K.Api.Commands
         /// Update a faction
         /// </summary>
         /// <param name="updateFactionCmd">The command to update the faction</param>
-        /// <returns>Task</returns>
+        /// <returns>API command result</returns>
         [HttpPut]
         public async Task<IActionResult> PutAsync(UpdateFaction updateFactionCmd) => await ExecuteCommandAsync(updateFactionCmd, _updateFactionSvc.ExecuteAsync);
 
@@ -59,7 +59,7 @@ namespace JellyDev.WH40K.Api.Commands
         /// Delete a faction
         /// </summary>
         /// <param name="deleteFactionCmd">The command to delete the faction</param>
-        /// <returns>Task</returns>
+        /// <returns>API command result</returns>
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(DeleteFaction deleteFactionCmd) => await ExecuteCommandAsync(deleteFactionCmd, _deleteFactionSvc.ExecuteAsync);
     }

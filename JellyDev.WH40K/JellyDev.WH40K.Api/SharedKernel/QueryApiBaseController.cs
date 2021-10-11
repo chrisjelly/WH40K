@@ -16,7 +16,7 @@ namespace JellyDev.WH40K.Api.SharedKernel
         /// <typeparam name="TOut">Type of ouput</typeparam>
         /// <param name="input">The query input</param>
         /// <param name="operation">The query operation</param>
-        /// <returns>Task</returns>
+        /// <returns>API query result</returns>
         public async Task<IActionResult> ExecuteQueryAsync<TIn, TOut>(TIn input, Func<TIn, Task<TOut>> operation)
         {
             TOut results = default(TOut);

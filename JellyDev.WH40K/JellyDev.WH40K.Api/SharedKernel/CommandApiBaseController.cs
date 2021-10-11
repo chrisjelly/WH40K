@@ -15,7 +15,7 @@ namespace JellyDev.WH40K.Api.SharedKernel
         /// <typeparam name="TIn">Type of input</typeparam>
         /// <param name="input">The command input</param>
         /// <param name="operation">The command operation</param>
-        /// <returns>Task</returns>
+        /// <returns>API command result</returns>
         public async Task<IActionResult> ExecuteCommandAsync<TIn>(TIn input, Func<TIn, Task> operation)
         {
             try

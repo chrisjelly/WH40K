@@ -43,7 +43,7 @@ namespace JellyDev.WH40K.Api.Commands
         /// Create a stratagem
         /// </summary>
         /// <param name="createStratagemCmd">The command to create the stratagem</param>
-        /// <returns>Task</returns>
+        /// <returns>API command result</returns>
         [HttpPost]
         public async Task<IActionResult> PostAsync(CreateStratagem createStratagemCmd) => await ExecuteCommandAsync(createStratagemCmd, _createStratagemSvc.ExecuteAsync);
 
@@ -51,7 +51,7 @@ namespace JellyDev.WH40K.Api.Commands
         /// Update a stratagem
         /// </summary>
         /// <param name="updateStratagemCmd">The command to update the stratagem</param>
-        /// <returns>Task</returns>
+        /// <returns>API command result</returns>
         [HttpPut]
         public async Task<IActionResult> PutAsync(UpdateStratagem updateStratagemCmd) => await ExecuteCommandAsync(updateStratagemCmd, _updateStratagemSvc.ExecuteAsync);
 
@@ -59,7 +59,7 @@ namespace JellyDev.WH40K.Api.Commands
         /// Delete a stratagem
         /// </summary>
         /// <param name="deleteStratagemCmd">The command to delete the stratagem</param>
-        /// <returns>Task</returns>
+        /// <returns>API command result</returns>
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(DeleteStratagem deleteStratagemCmd) => await ExecuteCommandAsync(deleteStratagemCmd, _deleteStratagemSvc.ExecuteAsync);
     }
