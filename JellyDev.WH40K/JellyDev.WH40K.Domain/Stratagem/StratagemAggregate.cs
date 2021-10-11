@@ -54,7 +54,8 @@ namespace JellyDev.WH40K.Domain.Stratagem
             if (createStratagemParams == null) throw new ArgumentNullException(nameof(createStratagemParams));
             if (factionChecker == null) throw new ArgumentNullException(nameof(factionChecker));
 
-            if (factionChecker.Exists(createStratagemParams.FactionId) == false) throw new Exception($"Unable to find faction with id {createStratagemParams.FactionId}");
+            if (createStratagemParams.FactionId != Guid.Empty && factionChecker.Exists(createStratagemParams.FactionId) == false) 
+                throw new Exception($"Unable to find faction with id {createStratagemParams.FactionId}");
 
             Apply(new Events.StratagemCreated
             {
@@ -77,7 +78,8 @@ namespace JellyDev.WH40K.Domain.Stratagem
             if (updateStratagemParams == null) throw new ArgumentNullException(nameof(updateStratagemParams));
             if (factionChecker == null) throw new ArgumentNullException(nameof(factionChecker));
 
-            if (factionChecker.Exists(updateStratagemParams.FactionId) == false) throw new Exception($"Unable to find faction with id {updateStratagemParams.FactionId}");
+            if (updateStratagemParams.FactionId != Guid.Empty && factionChecker.Exists(updateStratagemParams.FactionId) == false) 
+                throw new Exception($"Unable to find faction with id {updateStratagemParams.FactionId}");
 
             Apply(new Events.StratagemUpdated
             {

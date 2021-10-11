@@ -79,6 +79,34 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
         }
 
         [Fact]
+        public void Stratagem_can_be_created_with_no_faction()
+        {
+            // Arrange
+            var id = new StratagemId(Guid.NewGuid());
+            var factionId = new FactionId(Guid.Empty);
+            var phases = new List<Phase> { Phase.FromEnum(PhaseEnum.Movement), Phase.FromEnum(PhaseEnum.Charge) };
+            var name = Name.FromString("Test Stratagem");
+            var description = Description.FromString("These are the rules for the stratagem.");
+            var commandPoints = Amount.FromInt(2);
+            var createStratagemParams = new CreateStratagemParams(id, factionId, phases, name, description, commandPoints);
+
+            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
+            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+                .Returns(true);
+
+            // Act
+            var strategem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);
+
+            // Assert
+            Assert.Equal(id, strategem.Id);
+            Assert.True(strategem.Phases.Where(x => x.Value == PhaseEnum.Movement).Count() > 0);
+            Assert.True(strategem.Phases.Where(x => x.Value == PhaseEnum.Charge).Count() > 0);
+            Assert.Equal(name, strategem.Name);
+            Assert.Equal(description, strategem.Description);
+            Assert.Equal(commandPoints, strategem.CommandPoints);
+        }
+
+        [Fact]
         public void Strategem_cannot_be_updated_with_null_value()
         {
             // Arrange

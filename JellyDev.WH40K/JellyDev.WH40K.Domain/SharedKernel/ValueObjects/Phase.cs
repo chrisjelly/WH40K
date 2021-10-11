@@ -54,6 +54,7 @@ namespace JellyDev.WH40K.Domain.SharedKernel.ValueObjects
         Shooting = 4,
         Charge = 5,
         Fight = 6,
-        Morale = 7
+        Morale = 7,
+        Any = 8
     }
 }

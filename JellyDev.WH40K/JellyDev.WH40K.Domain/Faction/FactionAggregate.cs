@@ -130,11 +130,7 @@ namespace JellyDev.WH40K.Domain.Faction
         /// Constructor
         /// </summary>
         /// <param name="value">The value to use for the faction ID</param>
-        public FactionId(Guid value)
-        {
-            if (value == default) throw new ArgumentNullException(nameof(value), "Faction id cannot be empty");
-            Value = value;
-        }
+        public FactionId(Guid value) => Value = value;
 
         /// <summary>
         /// Implicit operator to GUID

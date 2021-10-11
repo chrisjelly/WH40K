@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JellyDev.WH40K.Infrastructure.Migrations
+namespace JellyDev.WH40K.Infrastructure.Migrations.StratagemDb
 {
     public partial class Initial : Migration
     {

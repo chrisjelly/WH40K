@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace JellyDev.WH40K.Infrastructure.Migrations
+namespace JellyDev.WH40K.Infrastructure.Migrations.StratagemDb
 {
     [DbContext(typeof(StratagemDbContext))]
     partial class StratagemDbContextModelSnapshot : ModelSnapshot

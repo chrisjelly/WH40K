@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JellyDev.WH40K.Infrastructure.Migrations.FactionDb
+namespace JellyDev.WH40K.Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {
@@ -24,6 +24,18 @@ namespace JellyDev.WH40K.Infrastructure.Migrations.FactionDb
                 {
                     table.PrimaryKey("PK_Factions", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                schema: "WH",
+                table: "Factions",
+                columns: new[] { "Id", "Created", "LastUpdated", "Name" },
+                values: new object[] { new Guid("16fb2151-3ded-4e74-9215-cde3a68cf661"), new DateTime(2021, 10, 11, 3, 54, 15, 906, DateTimeKind.Utc).AddTicks(9116), null, "Necrons" });
+
+            migrationBuilder.InsertData(
+                schema: "WH",
+                table: "Factions",
+                columns: new[] { "Id", "Created", "LastUpdated", "Name" },
+                values: new object[] { new Guid("749a7624-9d4a-4426-b2aa-d00073379e51"), new DateTime(2021, 10, 11, 3, 54, 15, 906, DateTimeKind.Utc).AddTicks(9508), null, "Space Marines" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
