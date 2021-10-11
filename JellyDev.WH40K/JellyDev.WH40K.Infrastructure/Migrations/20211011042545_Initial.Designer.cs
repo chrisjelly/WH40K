@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JellyDev.WH40K.Infrastructure.Migrations
 {
     [DbContext(typeof(FactionDbContext))]
-    [Migration("20211011035416_Initial")]
+    [Migration("20211011042545_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,20 +39,6 @@ namespace JellyDev.WH40K.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Factions", "WH");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("16fb2151-3ded-4e74-9215-cde3a68cf661"),
-                            Created = new DateTime(2021, 10, 11, 3, 54, 15, 906, DateTimeKind.Utc).AddTicks(9116),
-                            Name = "Necrons"
-                        },
-                        new
-                        {
-                            Id = new Guid("749a7624-9d4a-4426-b2aa-d00073379e51"),
-                            Created = new DateTime(2021, 10, 11, 3, 54, 15, 906, DateTimeKind.Utc).AddTicks(9508),
-                            Name = "Space Marines"
-                        });
                 });
 #pragma warning restore 612, 618
         }

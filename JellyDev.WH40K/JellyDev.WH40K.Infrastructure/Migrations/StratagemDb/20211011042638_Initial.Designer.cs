@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JellyDev.WH40K.Infrastructure.Migrations.StratagemDb
 {
     [DbContext(typeof(StratagemDbContext))]
-    [Migration("20211011035916_Initial")]
+    [Migration("20211011042638_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
