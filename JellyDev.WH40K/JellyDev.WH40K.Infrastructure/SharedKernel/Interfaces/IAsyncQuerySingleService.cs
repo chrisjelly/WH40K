@@ -14,7 +14,7 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces
         /// Run the query
         /// </summary>
         /// <param name="queryModel">Query model</param>
-        /// <returns>Read model results</returns>
+        /// <returns>Read model result</returns>
         Task<TReadModel> QueryAsync(TQueryModel queryModel);
     }
 }

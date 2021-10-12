@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Database\SeedScripts\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
