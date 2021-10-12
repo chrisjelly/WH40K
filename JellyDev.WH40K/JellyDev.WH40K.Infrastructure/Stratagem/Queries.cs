@@ -24,10 +24,15 @@ namespace JellyDev.WH40K.Infrastructure.Stratagem
             => connection.QueryAsync<ReadModels.Stratagem>(
                 "SELECT s.\"Id\", s.\"FactionId\", s.\"Name\",  s.\"Description\", s.\"CommandPoints\" " +
                 "FROM WH.\"Stratagems\" s " +
+                "INNER JOIN WH.\"Stratagem_Phases\" sp ON s.\"Id\" = sp.\"StratagemId\" " +
+                "WHERE (s.\"FactionId\" = @FactionId OR s.\"FactionId\" = 0x0) " +
+                $"AND (sp.\"Phase\" = @Phase OR @Phase = {(int)PhaseEnum.Any}) " +
                 "ORDER BY s.\"Id\" " +
                 "OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY",
                 new
                 {
+                    FactionId = query.FactionId,
+                    Phase = query.Phase,
                     PageSize = query.PageSize,
                     Offset = QueriesHelper.Offset(query.Page, query.PageSize)
                 });
