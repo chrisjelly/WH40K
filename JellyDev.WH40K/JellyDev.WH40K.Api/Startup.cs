@@ -11,6 +11,8 @@ using Autofac.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Serilog.Events;
+using System.Collections.ObjectModel;
+using System.Data;
 
 namespace JellyDev.WH40K.Api
 {
@@ -61,20 +63,35 @@ namespace JellyDev.WH40K.Api
             columnOpts.Store.Add(StandardColumn.LogEvent);
             columnOpts.LogEvent.DataLength = 2048;
             columnOpts.TimeStamp.NonClusteredIndex = true;
+            columnOpts.AdditionalColumns = new Collection<SqlColumn>
+            {
+                new SqlColumn {
+                    ColumnName = "RequestType", 
+                    PropertyName = "RequestType", 
+                    DataType = SqlDbType.NVarChar, 
+                    DataLength = 50
+                }
+            };
 
             Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
                 .WriteTo
                 .MSSqlServer(
                     connectionString: connectionStringWrite,
                     sinkOptions: sinkOpts,
                     columnOptions: columnOpts)
                 .CreateLogger();
+
+            services.AddSingleton(Log.Logger);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, StratagemDbContext stratagemDbContext, FactionDbContext factionDbContext)
         {
             AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+            
+            app.UseSerilogRequestLogging();
 
             if (env.IsDevelopment())
             {

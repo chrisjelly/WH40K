@@ -1,6 +1,6 @@
 ﻿using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,14 +20,14 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         /// <summary>
         /// Logger
         /// </summary>
-        private readonly ILogger<IAsyncQueryService<TReadModel, TQueryModel>> _logger;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="decoratee">The decorated Async QueryService</param>
         /// <param name="logger">Logger</param>
-        public LoggingAsyncQueryService(IAsyncQueryService<TReadModel, TQueryModel> decoratee, ILogger<IAsyncQueryService<TReadModel, TQueryModel>> logger)
+        public LoggingAsyncQueryService(IAsyncQueryService<TReadModel, TQueryModel> decoratee, ILogger logger)
         {
             _decoratee = decoratee;
             _logger = logger;
@@ -42,7 +42,8 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         {
             IEnumerable<TReadModel> results = await _decoratee.QueryAsync(queryModel);
             string serializedQuery = JsonConvert.SerializeObject(queryModel);
-            _logger.LogInformation($"Executed async query: {serializedQuery}");
+            _logger.ForContext("RequestType", "async query")
+                .Information($"Executed async query: {serializedQuery}");
             return results;
         }
     }

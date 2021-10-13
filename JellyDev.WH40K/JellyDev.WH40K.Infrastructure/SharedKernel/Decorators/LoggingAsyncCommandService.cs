@@ -1,6 +1,6 @@
 ﻿using JellyDev.WH40K.Infrastructure.SharedKernel.Interfaces;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Serilog;
 using System.Threading.Tasks;
 
 namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
@@ -18,14 +18,14 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         /// <summary>
         /// Logger
         /// </summary>
-        private readonly ILogger<LoggingAsyncCommandService<TCommand>> _logger;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="decoratee">The decorated Async Command Service</param>
         /// <param name="logger">Logger</param>
-        public LoggingAsyncCommandService(IAsyncCommandService<TCommand> decoratee, ILogger<LoggingAsyncCommandService<TCommand>> logger)
+        public LoggingAsyncCommandService(IAsyncCommandService<TCommand> decoratee, ILogger logger)
         {
             _decoratee = decoratee;
             _logger = logger;
@@ -39,7 +39,8 @@ namespace JellyDev.WH40K.Infrastructure.SharedKernel.Decorators
         {            
             await _decoratee.ExecuteAsync(command);
             string serializedCommand = JsonConvert.SerializeObject(command);
-            _logger.LogInformation($"Executed async command: {serializedCommand}");
+            _logger.ForContext("RequestType", "async command")
+                .Information($"Executed async command: {serializedCommand}");            
         }
     }
 }
