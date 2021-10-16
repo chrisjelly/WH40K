@@ -2,6 +2,8 @@
 using JellyDev.WH40K.Domain.SharedKernel.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using MoreLinq;
 
 namespace JellyDev.WH40K.Domain.Stratagem.ParameterObjects
 {
@@ -57,10 +59,10 @@ namespace JellyDev.WH40K.Domain.Stratagem.ParameterObjects
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (description == null) throw new ArgumentNullException(nameof(description));
             if (commandPoints == null) throw new ArgumentNullException(nameof(commandPoints));
-
+           
             Id = id;
             FactionId = factionId;
-            Phases = phases;
+            Phases = phases.DistinctBy(x => Phase.FromEnum(x.Value)).ToArray(); // Only select distinct phase values
             Name = name;
             Description = description;
             CommandPoints = commandPoints;
