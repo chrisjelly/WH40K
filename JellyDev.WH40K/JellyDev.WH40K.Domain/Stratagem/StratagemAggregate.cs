@@ -145,9 +145,9 @@ namespace JellyDev.WH40K.Domain.Stratagem
             Id = new StratagemId(e.Id);
             FactionId = new FactionId(e.FactionId);
             Phases = e.Phases;
-            Name = Name.FromString(e.Name);
-            Description = Description.FromString(e.Description);
-            CommandPoints = Amount.FromInt(e.CommandPoints);
+            Name = new Name(e.Name);
+            Description = new Description(e.Description);
+            CommandPoints = new Amount(e.CommandPoints);
         }
 
         /// <summary>

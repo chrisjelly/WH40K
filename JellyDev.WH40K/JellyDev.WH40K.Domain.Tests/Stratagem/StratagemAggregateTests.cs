@@ -62,12 +62,12 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var commandPoints = Amount.FromInt(2);
             var createStratagemParams = new CreateStratagemParams(id, factionId, phases, name, description, commandPoints);
 
-            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
-            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+            var factionChecker = new Mock<IRepositoryChecker<FactionId>>();
+            factionChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
                 .Returns(true);
 
             // Act
-            var strategem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);          
+            var strategem = new StratagemAggregate(createStratagemParams, factionChecker.Object);          
 
             // Assert
             Assert.Equal(id, strategem.Id);
@@ -90,12 +90,12 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var commandPoints = Amount.FromInt(2);
             var createStratagemParams = new CreateStratagemParams(id, factionId, phases, name, description, commandPoints);
 
-            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
-            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+            var factionChecker = new Mock<IRepositoryChecker<FactionId>>();
+            factionChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
                 .Returns(true);
 
             // Act
-            var strategem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);
+            var strategem = new StratagemAggregate(createStratagemParams, factionChecker.Object);
 
             // Assert
             Assert.Equal(id, strategem.Id);
@@ -118,11 +118,11 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var commandPoints = Amount.FromInt(2);
             var createStratagemParams = new CreateStratagemParams(id, factionId, phases, name, description, commandPoints);
 
-            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
-            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+            var factionChecker = new Mock<IRepositoryChecker<FactionId>>();
+            factionChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
                 .Returns(true);
 
-            StratagemAggregate stratagem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);
+            StratagemAggregate stratagem = new StratagemAggregate(createStratagemParams, factionChecker.Object);
 
             var updateStratagemParams = new UpdateStratagemParams(factionId, phases, name, description, commandPoints);
 
@@ -146,16 +146,16 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var newFactionId = new FactionId(Guid.NewGuid());
             var updateStratagemParams = new UpdateStratagemParams(newFactionId, phases, name, description, commandPoints);
 
-            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
-            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+            var factionChecker = new Mock<IRepositoryChecker<FactionId>>();
+            factionChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
                 .Returns(true);
-            repositoryChecker.Setup(x => x.Exists(new FactionId(updateStratagemParams.FactionId)))
+            factionChecker.Setup(x => x.Exists(new FactionId(updateStratagemParams.FactionId)))
                 .Returns(false);
 
-            StratagemAggregate stratagem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);
+            StratagemAggregate stratagem = new StratagemAggregate(createStratagemParams, factionChecker.Object);
 
             // Act & Assert
-            Assert.Throws<Exception>(() => stratagem.Update(updateStratagemParams, repositoryChecker.Object));
+            Assert.Throws<Exception>(() => stratagem.Update(updateStratagemParams, factionChecker.Object));
         }
 
         [Fact]
@@ -177,16 +177,16 @@ namespace JellyDev.WH40K.Domain.Tests.Stratagem
             var newCommandPoints = Amount.FromInt(5);
             var updateStratagemParams = new UpdateStratagemParams(newFactionId, newPhases, newName, newDescription, newCommandPoints);
 
-            var repositoryChecker = new Mock<IRepositoryChecker<FactionId>>();
-            repositoryChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
+            var factionChecker = new Mock<IRepositoryChecker<FactionId>>();
+            factionChecker.Setup(x => x.Exists(new FactionId(createStratagemParams.FactionId)))
                 .Returns(true);
-            repositoryChecker.Setup(x => x.Exists(new FactionId(updateStratagemParams.FactionId)))
+            factionChecker.Setup(x => x.Exists(new FactionId(updateStratagemParams.FactionId)))
                 .Returns(true);
 
-            StratagemAggregate stratagem = new StratagemAggregate(createStratagemParams, repositoryChecker.Object);
+            StratagemAggregate stratagem = new StratagemAggregate(createStratagemParams, factionChecker.Object);
 
             // Act
-            stratagem.Update(updateStratagemParams, repositoryChecker.Object);
+            stratagem.Update(updateStratagemParams, factionChecker.Object);
 
             // Assert
             Assert.True(stratagem.Phases.Where(x => x.Value == PhaseEnum.Shooting).Count() > 0);
