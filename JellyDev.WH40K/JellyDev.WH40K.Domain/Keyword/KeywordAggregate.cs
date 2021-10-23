@@ -50,6 +50,38 @@ namespace JellyDev.WH40K.Domain.Keyword
         }
 
         /// <summary>
+        /// Update the keyword
+        /// </summary>
+        /// <param name="updateKeywordParams">Parameter object for updating a keyword</param>
+        /// <param name="factionChecker">Faction checker for confirming factions exist</param>
+        public void Update(UpdateKeywordParams updateKeywordParams, IRepositoryChecker<FactionId> factionChecker)
+        {
+            if (updateKeywordParams == null) throw new ArgumentNullException(nameof(updateKeywordParams));
+            if (factionChecker == null) throw new ArgumentNullException(nameof(factionChecker));
+
+            if (updateKeywordParams.FactionId != Guid.Empty && factionChecker.Exists(updateKeywordParams.FactionId) == false)
+                throw new Exception($"Unable to find faction with id {updateKeywordParams.FactionId}");
+
+            Apply(new Events.KeywordUpdated
+            {
+                Id = Id,
+                FactionId = updateKeywordParams.FactionId,
+                Name = updateKeywordParams.Name
+            });
+        }
+
+        /// <summary>
+        /// Delete the keyword
+        /// </summary>
+        public void Delete()
+        {
+            Apply(new Events.KeywordDeleted
+            {
+                Id = Id
+            });
+        }
+
+        /// <summary>
         /// Ensure the aggregate is in a valid state
         /// </summary>
         protected override void EnsureValidState()
@@ -73,6 +105,9 @@ namespace JellyDev.WH40K.Domain.Keyword
                 case Events.KeywordCreated e:
                     HandleKeywordCreated(e);
                     break;
+                case Events.KeywordUpdated e:
+                    HandleKeywordUpdated(e);
+                    break;
             }
         }
 
@@ -83,6 +118,16 @@ namespace JellyDev.WH40K.Domain.Keyword
         private void HandleKeywordCreated(Events.KeywordCreated e)
         {
             Id = new KeywordId(e.Id);
+            FactionId = new FactionId(e.FactionId);
+            Name = new Name(e.Name);
+        }
+
+        /// <summary>
+        /// Keyword Updated event handler
+        /// </summary>
+        /// <param name="e">Keyword Updated event</param>
+        private void HandleKeywordUpdated(Events.KeywordUpdated e)
+        {
             FactionId = new FactionId(e.FactionId);
             Name = new Name(e.Name);
         }
